@@ -1,0 +1,50 @@
+/* src/components/Navbar.css */
+
+.navbar {
+    display: flex;
+    justify-content: space-between; /* Pushes logo to the left, profile to the right */
+    align-items: center;
+    padding: 1rem var(--spacing-md); /* Use global spacing for consistency */
+    position: relative; /* Stays within the header's flow */
+    color: var(--color-white); /* Text color inside the hero gradient is white */
+}
+
+.navbar-logo a {
+    /* TripMate text styling */
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-white);
+    text-decoration: none; /* Remove underline from link */
+}
+
+.navbar-profile {
+    /* Ensures the icon maintains the right color */
+    color: var(--color-white); 
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* Optional: Add links/menu styles if you uncomment them later */
+.navbar-links {
+    /* Hide on mobile, show on desktop */
+    display: none; 
+}
+
+@media (min-width: 768px) {
+    .navbar-links {
+        display: flex;
+        gap: 1.5rem;
+    }
+
+    .navbar-links a {
+        color: var(--color-white);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s;
+    }
+
+    .navbar-links a:hover {
+        color: var(--color-secondary-green); /* Hover accent from theme */
+    }
+}

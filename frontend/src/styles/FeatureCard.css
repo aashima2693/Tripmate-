@@ -1,0 +1,63 @@
+/* src/components/FeatureCard.css */
+
+.feature-cards-grid {
+    /* Position the cards to overlay the hero section */
+    display: grid;
+    gap: 1.5rem;
+    padding: 0 1.5rem; /* Matches --spacing-md from global.css */
+    margin-top: -6rem; /* Brutally lift the cards over the gradient */
+    z-index: 10;
+    position: relative; /* Ensure it stays above other content */
+}
+
+/* **Desktop Layout (The critical part for a website)** */
+@media (min-width: 768px) {
+    .feature-cards-grid {
+        grid-template-columns: repeat(3, 1fr); /* 3 cards side-by-side */
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: -4rem; /* Less lift on wider screens */
+    }
+}
+
+/* Base Card Styling */
+.feature-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-light);
+    color: var(--color-white); /* All text in the cards is white */
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.feature-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+}
+
+.feature-card .icon-wrapper {
+    /* The circular or squared wrapper around the icon */
+    padding: 0.5rem;
+}
+
+.feature-card .title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-white); /* Override dark text style */
+}
+
+.feature-card .subtitle {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    margin: 0;
+}
+
+/* Specific Card Backgrounds (From FeatureCard.jsx usage) */
+.card-gradient-blue-green {
+    background: linear-gradient(90deg, var(--color-primary-blue) 0%, var(--color-secondary-green) 100%);
+}
+/* You will define 'card-solid-blue' and 'card-solid-green' later */
