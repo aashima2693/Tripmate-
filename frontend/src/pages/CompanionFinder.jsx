@@ -1,75 +1,163 @@
-// src/pages/CompanionFinder.jsx
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import CompanionCard from "../components/CompanionCard";
-import FilterTabs from "../components/FilterTabs";
-import "../styles/Companion.css";
-
-const sampleCompanions = [
-  {
-    id: "1",
-    name: "Rohan S.",
-    age: 29,
-    title: "Solo Traveler, Photographer",
-    avatar: "https://i.pravatar.cc/100?img=32",
-    verified: true,
-    tags: ["Adventure", "Photography", "Culture"],
-    upcoming: "5 Days us in Himalayas - Oct",
-  },
-  {
-    id: "2",
-    name: "Priya K.",
-    age: 27,
-    title: "Culture & Food Enthusiast",
-    avatar: "https://i.pravatar.cc/100?img=47",
-    verified: true,
-    tags: ["Food", "Culture"],
-    upcoming: "3 Days Goa Beach Trip - Nov",
-  },
-  {
-    id: "3",
-    name: "Amit M.",
-    age: 31,
-    title: "Backpacker, Remote Worker",
-    avatar: "https://i.pravatar.cc/100?img=12",
-    verified: false,
-    tags: ["Mountains", "Trekking"],
-    upcoming: "",
-  },
-];
+// src/pages/CompanionFinder.jsx (FINAL CORRECTED VERSION)
+import React, { useState, useMemo } from 'react';
+import { Container, Row, Col, Dropdown, DropdownButton, Card, Form, InputGroup } from 'react-bootstrap';
+import CompanionCard from '../components/CompanionCard';
+import { 
+  companionData, 
+  getAgeRange, 
+  interestsList, 
+  ageRanges, 
+  availableMonths,
+  destinationList,
+  locationList // 👈 Ensure you have this new import from ../data/Companions
+} from '../data/Companions';
 
 const CompanionFinder = () => {
-  const [companions] = useState(sampleCompanions);
-  const navigate = useNavigate();
+  const [filters, setFilters] = useState({
+    destination: 'All Destinations',
+    location: 'All Locations', // 👈 New state property
+    age: 'All Ages',
+    interest: 'All Interests',
+    month: 'All Dates',
+    search: '',
+  });
 
-  const openProfile = (id) => {
-    navigate(`/companions/${id}`);
+  const handleFilterChange = (filterName, value) => {
+    setFilters(prev => ({ ...prev, [filterName]: value }));
   };
 
+  const filteredCompanions = useMemo(() => {
+    const searchTerm = filters.search.toLowerCase();
+    
+    return companionData.filter(companion => {
+      
+      // 1. Destination Filter Check (WAS MISSING)
+      const destinationMatch = filters.destination === 'All Destinations' || companion.destination === filters.destination;
+      
+      // 2. Location Filter Check (NEW LOGIC)
+      const locationMatch = filters.location === 'All Locations' || companion.startingLocation === filters.location; 
+      
+      // 3. Age Filter Check
+      const ageMatch = filters.age === 'All Ages' || getAgeRange(companion.age) === filters.age;
+      
+      // 4. Interest Filter Check
+      const interestMatch = filters.interest === 'All Interests' || companion.interests.includes(filters.interest);
+      
+      // 5. Month Filter Check
+      const monthMatch = filters.month === 'All Dates' || companion.availableMonths.includes(filters.month);
+      
+      // 6. Search Check
+      const searchMatch = companion.name.toLowerCase().includes(searchTerm) || companion.bio.toLowerCase().includes(searchTerm);
+
+      // COMBINED RETURN: MUST match ALL criteria
+      return destinationMatch && locationMatch && ageMatch && interestMatch && monthMatch && searchMatch;
+    });
+  }, [filters]);
+
   return (
-    <div className="companion-page">
-      <div className="companion-header">
-        <div className="top-icons">
-          <span className="icon">✈️</span>
-          <span className="logo">TripMate</span>
-          <span className="icon circle">◯</span>
-        </div>
+    <Container className="my-5">
+      
+      {/* 💥 Modern Gradient Header Banner */}
+      <Card className="mb-5 shadow-lg border-0 hero-gradient-bg">
+        <Card.Body className="text-center py-4">
+          <h1 className="fw-bolder m-0 text-white">🌍 Find Your TripMate</h1>
+          <p className="m-0 fs-5 text-white opacity-75">Connect with travelers heading to the **same destination** and starting near you.</p>
+        </Card.Body>
+      </Card>
 
-        <h1 className="companion-title">Find Your Travel Companion</h1>
-        <FilterTabs />
+      {/* Filter and Search Bar */}
+      <div className="p-3 mb-4 rounded-4 shadow-sm" style={{ backgroundColor: 'var(--color-white)' }}>
+        <Row className="g-3 align-items-center">
+          
+          {/* Search Input */}
+          <Col lg={3} md={12}>
+            <InputGroup>
+              <InputGroup.Text id="search-icon" className="bg-light border-end-0"><i className="bi bi-search"></i></InputGroup.Text>
+              <Form.Control
+                type="text"
+                placeholder="Search by Name, Interests, or Bio..."
+                value={filters.search}
+                onChange={(e) => handleFilterChange('search', e.target.value)}
+                className="shadow-none border-start-0"
+              />
+            </InputGroup>
+          </Col>
+
+          {/* Filters (Now takes up 9 columns on large screens) */}
+          <Col lg={9} md={12} className="d-flex flex-wrap justify-content-lg-end justify-content-center gap-2">
+            
+            {/* DESTINATION Dropdown (Primary Filter) */}
+            <DropdownButton
+              title={`Destination: ${filters.destination}`}
+              variant="primary" 
+              className="fw-bold"
+            >
+              <Dropdown.Item onClick={() => handleFilterChange('destination', 'All Destinations')} active={filters.destination === 'All Destinations'}>All Destinations</Dropdown.Item>
+              <Dropdown.Divider />
+              {destinationList.map(destination => (
+                <Dropdown.Item key={destination} onClick={() => handleFilterChange('destination', destination)} active={filters.destination === destination}>{destination}</Dropdown.Item>
+              ))}
+            </DropdownButton>
+            
+            {/* STARTING LOCATION Dropdown (NEW UI ELEMENT) */}
+            <DropdownButton
+              title={`Location: ${filters.location}`}
+              variant="outline-primary" 
+              className="fw-bold"
+            >
+              <Dropdown.Item onClick={() => handleFilterChange('location', 'All Locations')} active={filters.location === 'All Locations'}>All Locations</Dropdown.Item>
+              <Dropdown.Divider />
+              {/* You must define locationList in src/data/Companions */}
+              {locationList.map(location => (
+                <Dropdown.Item key={location} onClick={() => handleFilterChange('location', location)} active={filters.location === location}>{location}</Dropdown.Item>
+              ))}
+            </DropdownButton>
+
+            {/* Age Dropdown */}
+            <DropdownButton title={`Age: ${filters.age}`} variant="outline-primary">
+              <Dropdown.Item onClick={() => handleFilterChange('age', 'All Ages')} active={filters.age === 'All Ages'}>All Ages</Dropdown.Item>
+              <Dropdown.Divider />
+              {ageRanges.map(range => (
+                <Dropdown.Item key={range} onClick={() => handleFilterChange('age', range)} active={filters.age === range}>{range}</Dropdown.Item>
+              ))}
+            </DropdownButton>
+
+            {/* Interests Dropdown */}
+            <DropdownButton title={`Interests: ${filters.interest}`} variant="outline-primary">
+              <Dropdown.Item onClick={() => handleFilterChange('interest', 'All Interests')} active={filters.interest === 'All Interests'}>All Interests</Dropdown.Item>
+              <Dropdown.Divider />
+              {interestsList.map(interest => (
+                <Dropdown.Item key={interest} onClick={() => handleFilterChange('interest', interest)} active={filters.interest === interest}>{interest}</Dropdown.Item>
+              ))}
+            </DropdownButton>
+
+            {/* Dates/Month Dropdown */}
+            <DropdownButton title={`Available: ${filters.month}`} variant="outline-primary">
+              <Dropdown.Item onClick={() => handleFilterChange('month', 'All Dates')} active={filters.month === 'All Dates'}>All Dates</Dropdown.Item>
+              <Dropdown.Divider />
+              {availableMonths.map(month => (
+                <Dropdown.Item key={month} onClick={() => handleFilterChange('month', month)} active={filters.month === month}>{month}</Dropdown.Item>
+              ))}
+            </DropdownButton>
+          </Col>
+        </Row>
       </div>
 
-      <div className="companion-list-container">
-        <div className="cards-column">
-          {companions.map((c) => (
-            <CompanionCard key={c.id} companion={c} onClick={() => openProfile(c.id)} />
-          ))}
-        </div>
-
-        {/* On wide screens you can show profile side-by-side.
-            For this minimal implementation the profile is a separate route. */}
-      </div>
-    </div>
+      {/* Companion Cards Grid */}
+      <Row xs={1} md={2} lg={4} className="g-4 mt-4">
+        {filteredCompanions.length > 0 ? (
+          filteredCompanions.map(companion => (
+            <Col key={companion.id}>
+              <CompanionCard companion={companion} />
+            </Col>
+          ))
+        ) : (
+          <Col xs={12} className="text-center p-5">
+            <h4 className="text-muted">No travelers found for your current criteria. 😢</h4>
+          </Col>
+        )}
+      </Row>
+    </Container>
   );
 };
 
