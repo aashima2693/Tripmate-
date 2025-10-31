@@ -5,12 +5,13 @@ import { getAuth } from 'firebase/auth';
 
 // Your Firebase configuration object
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "SENDER_ID",
-    appId: "APP_ID"
+  apiKey: "AIzaSyBAQb4dbbiq0eWN1CYUHE1Z9qZN9sFgzKc",
+  authDomain: "tripmate-61d4e.firebaseapp.com",
+  projectId: "tripmate-61d4e",
+  storageBucket: "tripmate-61d4e.firebasestorage.app",
+  messagingSenderId: "936955632467",
+  appId: "1:936955632467:web:f90ada1a75cb62160c1fa6",
+  measurementId: "G-KJJBSVQZWE"
 };
 
 // Initialize Firebase
