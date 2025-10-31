@@ -22,7 +22,8 @@ const App = () => {
         <div className="d-flex flex-column min-vh-100">
             <BrowserRouter>
                 
-                
+                {/* 2. ADDED THE NAVBAR HERE */}
+                <Navbar /> 
 
                 {/* 3. Main content area that grows and pushes footer down */}
                 <main className="flex-grow-1">
@@ -35,9 +36,13 @@ const App = () => {
                         <Route path="/itinerary" element={<ItineraryDisplay />} />
 
                         {/* Loan Section */}
-                        <Route path="/loan" element={<TravelLoanScreen />} />
-                        <Route path="/loan/apply" element={<LoanApplicationScreen />} />
-                        <Route path="/loan/submitted" element={<LoanApplicationScreen />} />
+                        {/* /loan is the main page with the APPLY button */}
+                        <Route path="/loan" element={<TravelLoanScreen />} /> 
+                        {/* /loan/apply handles the initial form in the modal, but the next screen is the one below */}
+                        <Route path="/loan/apply" element={<LoanApplicationScreen />} /> 
+                        {/* /loan/submitted is the screen that shows "Reviewing..." */}
+                        <Route path="/loan/submitted" element={<LoanApplicationScreen />} /> 
+                        {/* /loan/approved is the final screen */}
                         <Route path="/loan/approved" element={<LoanApproval />} />
 
                         {/* Travel Companion Finder */}

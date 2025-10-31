@@ -5,3 +5,42 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+/* For the text overlay readability */
+.text-shadow-lg {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Ensure images cover the area without distortion */
+.object-cover {
+  object-fit: cover;
+}
+
+/* Slick slider fixes - often necessary to prevent overflow/margin issues */
+.slick-slide > div {
+  padding: 0 8px; /* Adds space between the cards within the slick track */
+}
+/* Custom CSS to force all slick slides to stretch to the same height */
+.slick-track {
+  /* Forces the slick track to be a flex container */
+  display: flex !important; 
+  /* Vertically aligns all items to the start, but more importantly, allows 'stretch' to work */
+  align-items: flex-start !important; 
+}
+
+.slick-slide {
+  /* Crucial: ensures each slide item respects the height of the track */
+  height: auto !important;
+}
+
+/* Optional: Ensures the content inside the card takes full height */
+.slick-slide > div,
+.slick-slide .card {
+    height: 100% !important;
+}
+
+/* Optional: Clean up the vertical alignment of the content (Card content) 
+   If you used the DestinationCard from my previous response with Ratio, 
+   this part might be handled already. */
+.slick-slide .position-relative {
+    height: 100%;
+}

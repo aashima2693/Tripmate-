@@ -11,8 +11,9 @@ const LoanApplicationScreen = () => {
 const navigate = useNavigate(); // 🛑 Initialize hook
 
     useEffect(() => {
+        // Redirects from 'Reviewing...' to 'Approved' after 3 seconds
         const timer = setTimeout(() => {
-            navigate('/loan/approved');
+            navigate('/loan/approved'); // <--- Correctly links to the final page
         }, 3000); 
 
         return () => clearTimeout(timer);

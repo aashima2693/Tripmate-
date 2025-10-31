@@ -17,7 +17,6 @@ const Home = () => {
 
   return (
     <div className="landing-page-container">
-      <Navbar />
 
       {/* 🌄 Hero Section */}
       <header className="hero-gradient-bg">
@@ -57,9 +56,10 @@ const Home = () => {
       {/* 🏝️ Destination Section Placeholder */}
       <section className="destinations-section" style={{ padding: '2rem 1.5rem', marginTop: '2rem' }}>
         <h2>Explore Popular Destinations</h2>
-        <p style={{ color: 'var(--color-text-subtle)' }}>
+        {/* 🛑 FLAW: The <p> tag here is illegal, replace it with a <div> */}
+        <div style={{ color: 'var(--color-text-subtle)' }}>
           <ExploreDestinations/>
-        </p>
+        </div>
       </section>
     </div>
   );
