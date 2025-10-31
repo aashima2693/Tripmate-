@@ -1,0 +1,101 @@
+user_id,user_name,budget,duration_days,interests,city,spot_name,category,entry_fee,rating,distance_from_center_km,travel_time_min,guide_name,guide_verified,guide_rating,vendor_name,vendor_verified,vendor_rating,review_comment
+5,User_5,30000,4,"history, spiritual, culture, street food",Kochi,Wildlife Spot 1 in Kochi,Wildlife,50,4.7,7.4,36,Guide_7,TRUE,3.0,Resort_45,FALSE,4.6,Very clean and safe.
+10,User_10,30000,4,"street food, beach, nature",Mumbai,Beach Spot 2 in Mumbai,Beach,200,3.3,15.3,73,Guide_23,FALSE,4.2,Cafe_32,TRUE,3.3,Budget friendly.
+7,User_7,5000,4,"spiritual, beach",Darjeeling,Beach Spot 3 in Darjeeling,Beach,200,3.5,15.0,66,Guide_8,TRUE,4.5,Resort_98,TRUE,4.5,Great experience!
+10,User_10,30000,6,"history, beach, culture, spiritual",Darjeeling,Hill Station Spot 4 in Darjeeling,Hill Station,200,5.0,12.2,56,Guide_16,FALSE,3.1,Shop_43,TRUE,3.1,Budget friendly.
+12,User_12,12000,2,"nature, culture",Hyderabad,Temple Spot 5 in Hyderabad,Temple,100,4.1,18.7,63,Guide_17,TRUE,4.6,Travel Agency_45,TRUE,4.7,Average experience.
+11,User_11,3000,5,"beach, nature",Mumbai,Heritage Site Spot 6 in Mumbai,Heritage Site,100,4.7,4.7,20,Guide_42,TRUE,3.0,Resort_11,TRUE,4.5,Average experience.
+5,User_5,20000,6,"culture, beach, street food",Goa,Market Spot 7 in Goa,Market,50,4.1,13.5,56,Guide_25,TRUE,4.5,Resort_48,TRUE,4.4,Great experience!
+19,User_19,20000,3,"history, beach, nature",Mumbai,Lake Spot 8 in Mumbai,Lake,200,4.5,14.2,70,Guide_32,TRUE,4.4,Hotel_11,TRUE,3.2,Highly recommended!
+10,User_10,5000,2,"culture, spiritual, nature, history",Kochi,Museum Spot 9 in Kochi,Museum,500,3.2,14.4,63,Guide_12,FALSE,4.0,Travel Agency_2,TRUE,4.6,Loved the guide.
+17,User_17,20000,3,"nature, adventure, spiritual",Hyderabad,Hill Station Spot 10 in Hyderabad,Hill Station,0,3.8,3.8,15,Guide_45,TRUE,4.3,Cafe_39,TRUE,4.1,Highly recommended!
+4,User_4,12000,2,"street food, adventure, history",Hyderabad,Fort Spot 11 in Hyderabad,Fort,100,3.3,21.6,67,Guide_48,TRUE,4.1,Shop_4,TRUE,4.4,Budget friendly.
+17,User_17,3000,2,"beach, street food, adventure",Chennai,Heritage Site Spot 12 in Chennai,Heritage Site,0,4.9,23.3,94,Guide_24,FALSE,3.7,Cafe_80,TRUE,3.4,Very clean and safe.
+8,User_8,3000,3,"adventure, street food, nature, spiritual",Varanasi,Beach Spot 13 in Varanasi,Beach,20,4.2,23.8,96,Guide_21,TRUE,3.6,Resort_96,FALSE,4.6,Great experience!
+3,User_3,20000,6,"nature, spiritual",Hyderabad,Museum Spot 14 in Hyderabad,Museum,0,5.0,11.7,36,Guide_45,FALSE,4.8,Travel Agency_9,FALSE,5.0,Budget friendly.
+8,User_8,8000,4,"beach, nature, history, adventure",Jaipur,Hill Station Spot 15 in Jaipur,Hill Station,0,4.0,24.4,118,Guide_24,FALSE,4.2,Hotel_9,FALSE,3.4,Great experience!
+16,User_16,3000,2,"culture, beach, adventure, nature",Mumbai,Hill Station Spot 16 in Mumbai,Hill Station,100,3.4,17.7,57,Guide_36,FALSE,4.9,Cafe_41,FALSE,4.9,Average experience.
+13,User_13,20000,5,"spiritual, beach, culture",Varanasi,Adventure Park Spot 17 in Varanasi,Adventure Park,0,4.3,6.4,23,Guide_33,FALSE,4.0,Resort_53,TRUE,3.9,Budget friendly.
+19,User_19,30000,4,"beach, nature, spiritual",Kochi,Wildlife Spot 18 in Kochi,Wildlife,0,3.6,19.1,58,Guide_36,FALSE,3.3,Hotel_26,FALSE,3.9,Great experience!
+3,User_3,3000,3,"street food, nature, beach",Jaipur,Market Spot 19 in Jaipur,Market,50,3.2,7.3,23,Guide_43,FALSE,3.3,Resort_7,TRUE,4.7,Average experience.
+16,User_16,20000,5,"beach, nature",Kochi,Fort Spot 20 in Kochi,Fort,500,4.3,22.7,84,Guide_27,TRUE,4.4,Travel Agency_99,TRUE,4.6,Very clean and safe.
+5,User_5,30000,3,"history, culture, beach",Mumbai,Market Spot 21 in Mumbai,Market,100,4.1,14.7,71,Guide_5,TRUE,3.8,Restaurant_36,FALSE,4.9,Very clean and safe.
+1,User_1,12000,4,"street food, history",Hyderabad,Lake Spot 22 in Hyderabad,Lake,100,3.0,3.4,11,Guide_12,TRUE,3.1,Resort_38,TRUE,3.8,Very clean and safe.
+8,User_8,12000,5,"culture, nature, adventure, street food",Kochi,Fort Spot 23 in Kochi,Fort,0,4.6,20.5,94,Guide_45,TRUE,4.5,Hotel_96,TRUE,4.7,Loved the guide.
+7,User_7,20000,6,"nature, spiritual, adventure",Varanasi,Lake Spot 24 in Varanasi,Lake,0,4.8,4.4,17,Guide_32,FALSE,3.9,Travel Agency_23,TRUE,3.3,Budget friendly.
+11,User_11,12000,2,"spiritual, culture, street food",Goa,Museum Spot 25 in Goa,Museum,50,4.7,12.7,38,Guide_26,FALSE,4.8,Restaurant_39,TRUE,3.4,Great experience!
+2,User_2,3000,3,"history, beach, culture, nature",Kochi,Fort Spot 26 in Kochi,Fort,200,3.7,20.4,88,Guide_4,FALSE,3.9,Resort_59,TRUE,4.8,Very clean and safe.
+1,User_1,8000,6,"beach, nature",Mumbai,Museum Spot 27 in Mumbai,Museum,200,3.7,6.1,28,Guide_14,TRUE,3.6,Hotel_25,FALSE,4.1,Great experience!
+19,User_19,30000,5,"adventure, spiritual, history, culture",Goa,Hill Station Spot 28 in Goa,Hill Station,20,3.4,13.6,45,Guide_35,FALSE,3.4,Resort_79,TRUE,3.3,Budget friendly.
+6,User_6,3000,4,"nature, adventure, culture, spiritual",Mumbai,Temple Spot 29 in Mumbai,Temple,100,3.2,9.6,36,Guide_43,FALSE,4.7,Travel Agency_94,FALSE,3.9,Loved the guide.
+19,User_19,30000,3,"nature, spiritual, beach",Mumbai,Fort Spot 30 in Mumbai,Fort,0,3.5,13.5,55,Guide_13,TRUE,3.3,Cafe_85,FALSE,4.1,Very clean and safe.
+13,User_13,5000,3,"street food, history, adventure, culture",Darjeeling,Adventure Park Spot 31 in Darjeeling,Adventure Park,50,4.3,10.0,49,Guide_23,FALSE,4.8,Travel Agency_64,TRUE,3.7,Budget friendly.
+9,User_9,12000,3,"spiritual, nature, culture, history",Jaipur,Hill Station Spot 32 in Jaipur,Hill Station,20,4.4,8.1,38,Guide_4,FALSE,4.9,Travel Agency_8,TRUE,3.9,Average experience.
+2,User_2,5000,2,"beach, adventure",Kochi,Temple Spot 33 in Kochi,Temple,0,4.7,5.2,18,Guide_1,FALSE,3.6,Hotel_81,FALSE,3.3,Average experience.
+1,User_1,5000,3,"spiritual, street food, beach, nature",Hyderabad,Market Spot 34 in Hyderabad,Market,20,4.5,10.3,39,Guide_29,FALSE,3.9,Restaurant_80,FALSE,3.7,Budget friendly.
+9,User_9,5000,4,"nature, beach, spiritual",Delhi,Lake Spot 35 in Delhi,Lake,50,3.6,24.9,119,Guide_11,FALSE,3.7,Cafe_88,FALSE,3.1,Great experience!
+5,User_5,5000,4,"history, culture",Mumbai,Beach Spot 36 in Mumbai,Beach,0,4.6,19.3,95,Guide_5,FALSE,3.1,Hotel_100,TRUE,3.4,Average experience.
+4,User_4,5000,6,"street food, beach, adventure, history",Jaipur,Hill Station Spot 37 in Jaipur,Hill Station,50,3.9,4.9,18,Guide_17,TRUE,4.5,Shop_58,TRUE,4.2,Highly recommended!
+15,User_15,20000,5,"history, street food, nature, culture",Hyderabad,Lake Spot 38 in Hyderabad,Lake,500,4.0,11.2,47,Guide_34,TRUE,4.7,Cafe_20,TRUE,4.3,Loved the guide.
+5,User_5,30000,4,"street food, adventure",Goa,Adventure Park Spot 39 in Goa,Adventure Park,0,3.9,11.8,46,Guide_41,TRUE,3.8,Resort_65,FALSE,3.3,Average experience.
+14,User_14,5000,5,"history, nature, adventure, spiritual",Kochi,Fort Spot 40 in Kochi,Fort,500,3.9,19.5,76,Guide_23,TRUE,4.4,Resort_89,FALSE,4.6,Average experience.
+19,User_19,5000,5,"street food, spiritual, nature",Hyderabad,Adventure Park Spot 41 in Hyderabad,Adventure Park,50,3.7,7.9,25,Guide_27,TRUE,3.5,Cafe_31,TRUE,3.8,Budget friendly.
+2,User_2,8000,4,"adventure, nature",Goa,Heritage Site Spot 42 in Goa,Heritage Site,0,3.6,13.2,63,Guide_30,FALSE,4.2,Hotel_94,FALSE,3.6,Highly recommended!
+13,User_13,12000,3,"adventure, history, spiritual",Goa,Beach Spot 43 in Goa,Beach,200,4.7,12.1,41,Guide_33,FALSE,4.7,Cafe_83,FALSE,4.6,Budget friendly.
+10,User_10,12000,4,"adventure, beach",Delhi,Hill Station Spot 44 in Delhi,Hill Station,50,4.5,16.4,50,Guide_48,FALSE,4.7,Shop_99,FALSE,4.7,Budget friendly.
+16,User_16,5000,2,"adventure, history, beach, spiritual",Darjeeling,Museum Spot 45 in Darjeeling,Museum,50,3.7,3.5,14,Guide_18,TRUE,4.4,Hotel_50,TRUE,3.3,Budget friendly.
+5,User_5,20000,2,"history, spiritual",Mumbai,Wildlife Spot 46 in Mumbai,Wildlife,100,3.9,11.1,53,Guide_10,TRUE,3.5,Travel Agency_63,TRUE,4.5,Highly recommended!
+15,User_15,30000,6,"beach, spiritual, street food, culture",Mumbai,Hill Station Spot 47 in Mumbai,Hill Station,0,3.1,19.4,87,Guide_27,TRUE,3.3,Shop_22,FALSE,3.7,Average experience.
+6,User_6,3000,4,"street food, nature, history",Varanasi,Market Spot 48 in Varanasi,Market,500,4.4,5.6,25,Guide_40,TRUE,3.2,Travel Agency_18,FALSE,3.4,Average experience.
+6,User_6,30000,4,"spiritual, street food",Delhi,Beach Spot 49 in Delhi,Beach,500,4.9,8.0,35,Guide_1,TRUE,4.1,Cafe_45,FALSE,4.5,Budget friendly.
+1,User_1,3000,5,"nature, culture",Hyderabad,Beach Spot 50 in Hyderabad,Beach,200,3.3,2.3,9,Guide_48,TRUE,4.7,Travel Agency_82,FALSE,4.0,Very clean and safe.
+13,User_13,12000,2,"beach, culture",Jaipur,Beach Spot 51 in Jaipur,Beach,500,3.4,11.4,44,Guide_22,TRUE,4.8,Restaurant_76,TRUE,4.7,Average experience.
+3,User_3,12000,4,"nature, beach, history, street food",Chennai,Market Spot 52 in Chennai,Market,20,4.0,21.3,97,Guide_10,TRUE,3.4,Shop_73,FALSE,4.3,Very clean and safe.
+8,User_8,5000,2,"adventure, history, beach",Delhi,Beach Spot 53 in Delhi,Beach,20,4.3,7.6,36,Guide_16,TRUE,3.8,Travel Agency_63,FALSE,4.5,Loved the guide.
+17,User_17,3000,3,"history, beach, nature, spiritual",Varanasi,Hill Station Spot 54 in Varanasi,Hill Station,0,4.4,4.9,21,Guide_48,FALSE,4.6,Hotel_1,TRUE,3.7,Average experience.
+1,User_1,20000,2,"history, nature, spiritual",Chennai,Wildlife Spot 55 in Chennai,Wildlife,0,3.1,23.9,82,Guide_37,FALSE,4.9,Cafe_53,FALSE,4.6,Loved the guide.
+4,User_4,8000,4,"history, street food",Darjeeling,Beach Spot 56 in Darjeeling,Beach,100,3.7,10.3,51,Guide_2,TRUE,4.3,Resort_16,FALSE,4.3,Highly recommended!
+11,User_11,12000,5,"beach, culture, history",Mumbai,Hill Station Spot 57 in Mumbai,Hill Station,20,3.8,20.7,63,Guide_42,TRUE,4.6,Shop_80,TRUE,4.0,Great experience!
+14,User_14,8000,4,"beach, street food",Manali,Market Spot 58 in Manali,Market,100,5.0,11.3,37,Guide_1,FALSE,4.0,Restaurant_31,FALSE,4.6,Budget friendly.
+16,User_16,20000,3,"beach, nature, culture, spiritual",Chennai,Adventure Park Spot 59 in Chennai,Adventure Park,500,4.1,3.1,14,Guide_14,FALSE,4.9,Travel Agency_7,TRUE,4.0,Loved the guide.
+15,User_15,5000,2,"nature, spiritual, beach",Chennai,Market Spot 60 in Chennai,Market,50,3.7,2.7,9,Guide_12,TRUE,3.2,Shop_34,TRUE,4.3,Great experience!
+1,User_1,20000,5,"spiritual, culture, street food, history",Delhi,Market Spot 61 in Delhi,Market,100,4.7,13.4,40,Guide_33,TRUE,3.8,Travel Agency_64,FALSE,3.5,Great experience!
+7,User_7,8000,6,"street food, spiritual",Kochi,Market Spot 62 in Kochi,Market,500,3.3,3.0,11,Guide_34,TRUE,4.4,Restaurant_59,TRUE,3.5,Budget friendly.
+6,User_6,3000,5,"culture, history",Chennai,Museum Spot 63 in Chennai,Museum,500,4.8,12.8,60,Guide_40,TRUE,3.4,Hotel_60,TRUE,3.3,Budget friendly.
+12,User_12,20000,6,"spiritual, history, nature, street food",Goa,Adventure Park Spot 64 in Goa,Adventure Park,0,3.2,23.7,74,Guide_14,TRUE,4.2,Travel Agency_31,FALSE,4.6,Budget friendly.
+11,User_11,12000,6,"nature, spiritual",Goa,Beach Spot 65 in Goa,Beach,50,3.5,1.2,4,Guide_11,FALSE,4.2,Hotel_10,TRUE,3.9,Highly recommended!
+5,User_5,30000,2,"nature, street food, beach",Darjeeling,Museum Spot 66 in Darjeeling,Museum,0,3.9,10.6,47,Guide_32,FALSE,4.0,Cafe_18,FALSE,4.5,Budget friendly.
+3,User_3,30000,5,"adventure, street food, culture",Chennai,Temple Spot 67 in Chennai,Temple,0,3.9,4.3,21,Guide_48,FALSE,3.2,Resort_2,FALSE,4.6,Average experience.
+9,User_9,3000,2,"street food, spiritual",Varanasi,Heritage Site Spot 68 in Varanasi,Heritage Site,20,4.2,23.2,79,Guide_29,FALSE,4.6,Restaurant_90,TRUE,3.8,Loved the guide.
+5,User_5,20000,5,"culture, nature, beach, street food",Jaipur,Fort Spot 69 in Jaipur,Fort,100,4.5,4.2,19,Guide_11,FALSE,4.9,Cafe_31,TRUE,4.4,Average experience.
+2,User_2,5000,4,"street food, beach",Goa,Heritage Site Spot 70 in Goa,Heritage Site,200,3.7,6.1,22,Guide_2,TRUE,3.5,Resort_48,TRUE,4.9,Very clean and safe.
+2,User_2,30000,4,"spiritual, nature, beach, culture",Goa,Beach Spot 71 in Goa,Beach,500,3.8,13.9,52,Guide_8,FALSE,4.7,Cafe_70,FALSE,3.7,Loved the guide.
+3,User_3,5000,5,"spiritual, adventure",Jaipur,Temple Spot 72 in Jaipur,Temple,200,4.0,7.1,29,Guide_39,TRUE,3.1,Resort_52,FALSE,4.2,Highly recommended!
+8,User_8,5000,3,"nature, spiritual",Kochi,Wildlife Spot 73 in Kochi,Wildlife,200,4.0,24.2,103,Guide_1,FALSE,3.5,Travel Agency_65,FALSE,3.2,Average experience.
+1,User_1,5000,2,"history, adventure",Delhi,Temple Spot 74 in Delhi,Temple,100,4.2,3.7,18,Guide_9,TRUE,3.9,Travel Agency_48,TRUE,3.9,Budget friendly.
+6,User_6,5000,6,"beach, culture, nature, spiritual",Manali,Fort Spot 75 in Manali,Fort,50,3.7,19.7,83,Guide_13,TRUE,4.0,Hotel_17,TRUE,4.1,Average experience.
+12,User_12,8000,4,"street food, nature, beach",Goa,Heritage Site Spot 76 in Goa,Heritage Site,50,4.6,22.5,89,Guide_17,TRUE,4.1,Resort_40,FALSE,3.3,Highly recommended!
+16,User_16,20000,6,"culture, nature",Manali,Fort Spot 77 in Manali,Fort,50,3.9,7.5,29,Guide_27,TRUE,3.8,Hotel_29,TRUE,3.2,Average experience.
+17,User_17,12000,5,"adventure, beach",Goa,Museum Spot 78 in Goa,Museum,100,3.9,21.1,74,Guide_35,TRUE,4.7,Shop_82,TRUE,4.0,Average experience.
+2,User_2,3000,2,"nature, street food",Chennai,Adventure Park Spot 79 in Chennai,Adventure Park,50,4.4,19.7,85,Guide_13,FALSE,3.7,Shop_93,TRUE,4.2,Average experience.
+14,User_14,8000,6,"adventure, nature, history, spiritual",Mumbai,Market Spot 80 in Mumbai,Market,20,3.8,9.4,45,Guide_40,TRUE,4.5,Resort_63,TRUE,3.1,Average experience.
+4,User_4,5000,3,"history, street food",Goa,Heritage Site Spot 81 in Goa,Heritage Site,500,3.9,21.5,107,Guide_16,FALSE,3.8,Cafe_57,TRUE,4.4,Great experience!
+4,User_4,8000,6,"beach, spiritual",Jaipur,Lake Spot 82 in Jaipur,Lake,200,4.0,13.7,62,Guide_13,FALSE,3.3,Travel Agency_7,TRUE,4.1,Budget friendly.
+16,User_16,3000,3,"spiritual, culture, nature, street food",Chennai,Museum Spot 83 in Chennai,Museum,100,3.3,11.1,45,Guide_41,TRUE,3.6,Restaurant_49,TRUE,4.1,Loved the guide.
+19,User_19,30000,2,"spiritual, adventure",Varanasi,Adventure Park Spot 84 in Varanasi,Adventure Park,50,4.7,23.2,115,Guide_4,FALSE,4.5,Restaurant_52,TRUE,4.0,Budget friendly.
+13,User_13,12000,3,"history, adventure",Varanasi,Wildlife Spot 85 in Varanasi,Wildlife,20,4.0,2.1,9,Guide_36,TRUE,3.3,Resort_45,TRUE,4.3,Great experience!
+8,User_8,30000,5,"history, adventure",Delhi,Heritage Site Spot 86 in Delhi,Heritage Site,200,3.1,12.8,41,Guide_41,TRUE,4.2,Cafe_52,TRUE,3.3,Great experience!
+6,User_6,12000,3,"adventure, culture, beach",Goa,Museum Spot 87 in Goa,Museum,50,4.9,19.2,64,Guide_19,FALSE,3.7,Restaurant_57,FALSE,3.8,Loved the guide.
+15,User_15,5000,2,"beach, nature",Mumbai,Museum Spot 88 in Mumbai,Museum,50,4.6,9.0,29,Guide_36,TRUE,3.0,Resort_93,FALSE,3.5,Budget friendly.
+18,User_18,12000,3,"nature, history, culture, adventure",Kochi,Temple Spot 89 in Kochi,Temple,500,5.0,6.6,28,Guide_28,TRUE,4.9,Resort_15,FALSE,3.3,Very clean and safe.
+7,User_7,12000,4,"beach, adventure, street food, spiritual",Delhi,Temple Spot 90 in Delhi,Temple,200,3.5,2.7,12,Guide_12,TRUE,4.7,Resort_32,TRUE,3.7,Budget friendly.
+7,User_7,20000,5,"spiritual, nature, history",Varanasi,Adventure Park Spot 91 in Varanasi,Adventure Park,100,4.3,20.0,74,Guide_24,FALSE,4.2,Shop_59,FALSE,4.3,Average experience.
+7,User_7,30000,4,"history, street food, culture, spiritual",Chennai,Museum Spot 92 in Chennai,Museum,0,3.7,19.6,63,Guide_17,FALSE,3.4,Hotel_12,TRUE,4.7,Budget friendly.
+10,User_10,12000,5,"spiritual, street food, history, culture",Varanasi,Wildlife Spot 93 in Varanasi,Wildlife,50,4.6,14.7,59,Guide_14,FALSE,3.7,Resort_33,FALSE,5.0,Average experience.
+11,User_11,12000,5,"nature, beach, spiritual",Chennai,Market Spot 94 in Chennai,Market,20,4.7,9.5,35,Guide_46,FALSE,3.5,Resort_86,FALSE,3.8,Budget friendly.
+9,User_9,20000,4,"adventure, nature, spiritual",Delhi,Museum Spot 95 in Delhi,Museum,100,3.2,8.8,26,Guide_48,FALSE,3.8,Restaurant_45,TRUE,4.3,Budget friendly.
+20,User_20,12000,2,"adventure, nature, spiritual, beach",Chennai,Wildlife Spot 96 in Chennai,Wildlife,100,4.9,2.8,12,Guide_25,TRUE,4.0,Hotel_30,FALSE,4.6,Loved the guide.
+19,User_19,3000,3,"beach, spiritual",Kochi,Temple Spot 97 in Kochi,Temple,500,3.6,5.8,25,Guide_35,FALSE,3.9,Hotel_41,FALSE,3.3,Highly recommended!
+17,User_17,30000,4,"beach, culture, street food",Mumbai,Market Spot 98 in Mumbai,Market,0,3.7,3.9,16,Guide_16,TRUE,4.6,Hotel_47,FALSE,3.2,Budget friendly.
+3,User_3,5000,5,"beach, history, adventure",Chennai,Hill Station Spot 99 in Chennai,Hill Station,0,4.4,18.2,75,Guide_4,FALSE,4.4,Restaurant_61,TRUE,4.0,Budget friendly.
+10,User_10,20000,4,"history, nature, culture",Varanasi,Wildlife Spot 100 in Varanasi,Wildlife,500,5.0,17.6,69,Guide_17,TRUE,4.8,Travel Agency_16,TRUE,4.7,Highly recommended!
