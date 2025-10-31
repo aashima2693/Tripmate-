@@ -14,33 +14,55 @@
 .object-cover {
   object-fit: cover;
 }
+/* Custom CSS to enforce vertical stretching for all cards in the slider */
 
-/* Slick slider fixes - often necessary to prevent overflow/margin issues */
-.slick-slide > div {
-  padding: 0 8px; /* Adds space between the cards within the slick track */
-}
-/* Custom CSS to force all slick slides to stretch to the same height */
+/* 1. Force the slick track to use flexbox for proper alignment/stretching */
 .slick-track {
-  /* Forces the slick track to be a flex container */
   display: flex !important; 
-  /* Vertically aligns all items to the start, but more importantly, allows 'stretch' to work */
+  /* Sets the alignment of items on the cross-axis (vertical) to the top */
   align-items: flex-start !important; 
 }
 
+/* 2. Ensure each individual slide container can take the full height */
 .slick-slide {
-  /* Crucial: ensures each slide item respects the height of the track */
   height: auto !important;
 }
 
-/* Optional: Ensures the content inside the card takes full height */
+/* 3. CRITICAL: Make your custom card component take 100% of the slide height.
+   Target the wrapper div inside the slide, and the Card itself. */
 .slick-slide > div,
 .slick-slide .card {
     height: 100% !important;
+    /* Ensure no flex property is interfering if you still have remnants */
+    display: block; 
 }
 
-/* Optional: Clean up the vertical alignment of the content (Card content) 
-   If you used the DestinationCard from my previous response with Ratio, 
-   this part might be handled already. */
+/* 4. Ensure the inner content of your DestinationCard also stretches (if necessary) */
 .slick-slide .position-relative {
     height: 100%;
+}
+/* Add this to your global stylesheet (e.g., App.css) */
+
+/* Target the main container wrapping the slider */
+.explore-destinations-slider-wrapper {
+  /* 🛑 CRITICAL: Define a fixed maximum height here */
+  max-height: 400px; /* Adjust this value (e.g., 350px or 400px) to shorten the cards */
+  overflow: hidden; /* Prevent issues if content tries to spill */
+}
+
+/* Re-apply the stretch properties to ensure cards fill the new, shorter height */
+.slick-track {
+  display: flex !important;
+  align-items: stretch !important; /* Items must stretch to fill the 400px height */
+}
+
+.slick-slide {
+  height: 100% !important; 
+}
+
+/* Ensure the card container itself takes the full, short height */
+.slick-slide > div,
+.slick-slide .card,
+.slick-slide .position-relative {
+    height: 100% !important;
 }
