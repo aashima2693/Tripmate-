@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import FeatureCard from '../components/FeatureCard';
 import { FaRobot, FaUsers, FaMoneyBillWave } from 'react-icons/fa';
+import DestinationCard from '../components/DestinationCard';
+import ExploreDestinations from '../components/ExploreDestinations';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -56,7 +58,7 @@ const Home = () => {
       <section className="destinations-section" style={{ padding: '2rem 1.5rem', marginTop: '2rem' }}>
         <h2>Explore Popular Destinations</h2>
         <p style={{ color: 'var(--color-text-subtle)' }}>
-          *Destination cards will go here soon!*
+          <ExploreDestinations/>
         </p>
       </section>
     </div>

@@ -6,7 +6,8 @@ import {
     updateTrip,
     deleteTrip,
     addCompanion,
-    updateTripStatus
+    updateTripStatus,
+    planTripAI // <-- NEW IMPORT
 } from '../controllers/trip.controller.js';
 import { verifyJWT } from '../middlewares/auth.middleware.js';
 import { body } from 'express-validator';
@@ -17,7 +18,19 @@ const router = Router();
 // All routes require authentication
 router.use(verifyJWT);
 
-// Trip CRUD operations
+// --- NEW ML INTEGRATION ROUTE ---
+router.post(
+    '/ai-plan',
+    [
+        // Simple validation before hitting the external service
+        body('budget').notEmpty().isNumeric().withMessage('Budget is required and must be a number'),
+        validate
+    ],
+    planTripAI
+);
+// ------------------------------------
+
+// Trip CRUD operations (EXISTING ROUTES)
 router.post(
     '/',
     [
