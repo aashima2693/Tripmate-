@@ -1,149 +1,309 @@
-// src/pages/PlannerForm.jsx (UPDATED)
+// ✅ PlannerForm.jsx (Vite + React + Bootstrap + GeoDB API)
 
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // 🛑 NEW IMPORT: For redirection
-import { FaMoneyBillWave, FaCalendarAlt, FaMapMarkerAlt } from 'react-icons/fa';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-// --- Reusable Component Helpers (No Change) ---
-// ... InputField, ChipButton, CheckboxToggle definitions remain the same ...
-
-const InputField = ({ label, placeholder, Icon }) => (
-    <div className="mb-4">
-        <label className="text-gray-600 text-sm font-semibold block mb-1">{label}</label>
-        <div className="flex items-center border border-gray-300 rounded-lg p-3 bg-white">
-            <Icon className="text-gray-400 mr-3" size={20} />
-            <input 
-                type="text"
-                placeholder={placeholder}
-                className="w-full text-gray-800 focus:outline-none placeholder-gray-500"
-            />
-        </div>
-    </div>
-);
-
-const ChipButton = ({ label, isSelected, onClick }) => (
-    <button 
-        onClick={onClick}
-        className={`px-4 py-2 text-sm font-medium rounded-full transition-colors duration-200 
-            ${isSelected 
-                ? 'bg-green-600 text-white shadow-md' 
-                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-            }`}
-    >
-        {label}
-    </button>
-);
-
-const CheckboxToggle = ({ label, isChecked, onChange }) => (
-    <div className="flex justify-between items-center py-4 border-b border-gray-200 last:border-b-0">
-        <label className="text-gray-700 font-semibold">{label}</label>
-        <button
-            onClick={onChange}
-            className={`w-12 h-6 flex items-center rounded-full p-1 transition-colors duration-300 ${
-                isChecked ? 'bg-green-500' : 'bg-gray-300'
-            }`}
-        >
-            <div className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform duration-300 ${
-                isChecked ? 'translate-x-6' : 'translate-x-0'
-            }`}></div>
-        </button>
-    </div>
-);
-
-
-// --- Main Planner Form Component ---
+import {
+  Form,
+  Button,
+  Container,
+  Row,
+  Col,
+  ListGroup,
+} from "react-bootstrap";
+import {
+  FaRupeeSign,
+  FaCalendarAlt,
+  FaMapMarkerAlt,
+} from "react-icons/fa";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const PlannerForm = () => {
-    // Hooks initialization
-    const navigate = useNavigate(); // 🛑 INITIALIZE REDIRECTION HOOK
-    const [selectedInterests, setSelectedInterests] = useState(['Culture of Heritage']);
-    const [isEcoFriendly, setIsEcoFriendly] = useState(false);
-    const [isPetFriendly, setIsPetFriendly] = useState(true);
+    const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    budget: "",
+    destination: "",
+    interests: [],
+    ecoFriendly: true,
+    petFriendly: true,
+  });
 
-    const toggleInterest = (interest) => {
-        setSelectedInterests(prev => 
-            prev.includes(interest)
-                ? prev.filter(i => i !== interest)
-                : [...prev, interest]
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+
+  const interestsList = [
+    "Mountains & Trekking",
+    "Culture of Heritage",
+    "Solo Nightlife",
+    "Food Travel",
+  ];
+
+  // ✅ Fetch destination suggestions from GeoDB API
+  const fetchSuggestions = async (query) => {
+    if (!query.trim()) {
+        setSuggestions([]);
+        return;
+    }
+
+    try {
+        const response = await axios.get(
+        `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=5&namePrefix=${query}`,
+        {
+            headers: {
+            "X-RapidAPI-Key": "5a70cab0ccmsh30e1dba28d3b9f3p111870jsnc4c654ac9010", // 🔑 replace with your key
+            "X-RapidAPI-Host": "wft-geo-db.p.rapidapi.com",
+            },
+        }
         );
-    };
 
-    // 🛑 NEW HANDLER: Submits form (data handling ignored for now) and redirects
-    const handlePlanSubmit = () => {
-        // PUSHBACK: This is where you would call your MERN backend API 
-        // using 'fetch' or 'axios' to send the form data.
-        console.log("Submitting form data..."); 
-        
-        // After simulated successful submission, redirect to the results page
-        navigate('/itinerary'); 
-    };
-    
-    // Handler for the top-left 'X' button
-    const handleClose = () => {
-        navigate('/'); // Go back to the Home page
+        // ✅ Safely handle missing or unexpected data
+        const cities =
+        response?.data?.data?.map(
+            (city) => `${city.city}, ${city.country}`
+        ) || [];
+
+        setSuggestions(cities);
+    } catch (error) {
+        console.error("GeoDB API error:", error.response?.data || error.message);
+        setSuggestions([]);
+    }
     };
 
 
-    return (
-        <div className="h-screen bg-gray-50 overflow-y-auto">
-            
-            <header className="bg-gray-900 text-white p-4 flex justify-between items-center sticky top-0 z-10">
-                <span 
-                    className="text-2xl cursor-pointer"
-                    onClick={handleClose} // 🛑 ADDED CLICK HANDLER
+  // Debounce destination input
+  useEffect(() => {
+    const delay = setTimeout(() => {
+      fetchSuggestions(formData.destination);
+    }, 400);
+    return () => clearTimeout(delay);
+  }, [formData.destination]);
+
+  // Handle input changes
+  const handleChange = (field, value) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleInterestToggle = (interest) => {
+    setFormData((prev) => {
+      const alreadySelected = prev.interests.includes(interest);
+      return {
+        ...prev,
+        interests: alreadySelected
+          ? prev.interests.filter((i) => i !== interest)
+          : [...prev.interests, interest],
+      };
+    });
+  };
+
+  const handleSelectSuggestion = (city) => {
+    setFormData((prev) => ({ ...prev, destination: city }));
+    setShowSuggestions(false);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Submitted Data:", {
+        ...formData,
+        startDate,
+        endDate,
+    });
+    navigate("/itinerary");
+    };
+
+
+  return (
+    <div
+      style={{
+        background: "linear-gradient(to bottom right, #00c6ff, #0072ff)",
+        minHeight: "100vh",
+        padding: "60px 0",
+      }}
+    >
+      <Container
+        className="bg-white shadow-lg p-5 rounded-4"
+        style={{ maxWidth: "800px" }}
+      >
+        <h2 className="text-center fw-bold mb-4">
+          Plan Your Adventure
+        </h2>
+
+        <Form onSubmit={handleSubmit}>
+          <Row className="g-4">
+            {/* 💰 Budget */}
+            <Col md={6}>
+              <div className="position-relative">
+                <FaRupeeSign
+                  className="position-absolute top-50 translate-middle-y text-muted"
+                  style={{ left: "10px" }}
+                />
+                <Form.Control
+                  type="number"
+                  placeholder="Budget"
+                  value={formData.budget}
+                  onChange={(e) =>
+                    handleChange("budget", e.target.value)
+                  }
+                  className="ps-4 py-3"
+                />
+              </div>
+            </Col>
+
+            {/* 📅 Dates */}
+            <Col md={6}>
+              <div className="position-relative">
+                <FaCalendarAlt
+                  className="position-absolute top-50 translate-middle-y text-muted"
+                  style={{ left: "10px", zIndex: "2" }}
+                />
+                <div className="d-flex ps-4">
+                  <DatePicker
+                    selected={startDate}
+                    onChange={(date) => {
+                      setStartDate(date);
+                      if (endDate && date > endDate)
+                        setEndDate(null);
+                    }}
+                    selectsStart
+                    startDate={startDate}
+                    endDate={endDate}
+                    placeholderText="From"
+                    dateFormat="dd/MM/yyyy"
+                    className="form-control me-2 py-3"
+                  />
+                  <DatePicker
+                    selected={endDate}
+                    onChange={(date) => setEndDate(date)}
+                    selectsEnd
+                    startDate={startDate}
+                    endDate={endDate}
+                    minDate={startDate}
+                    placeholderText="To"
+                    dateFormat="dd/MM/yyyy"
+                    className="form-control py-3"
+                  />
+                </div>
+              </div>
+            </Col>
+
+            {/* 📍 Destination */}
+            <Col md={12} className="position-relative">
+              <FaMapMarkerAlt
+                className="position-absolute top-50 translate-middle-y text-muted"
+                style={{ left: "10px" }}
+              />
+              <Form.Control
+                type="text"
+                placeholder="Enter Destination"
+                value={formData.destination}
+                onChange={(e) =>
+                  handleChange("destination", e.target.value)
+                }
+                onFocus={() =>
+                  formData.destination && setShowSuggestions(true)
+                }
+                onBlur={() =>
+                  setTimeout(() => setShowSuggestions(false), 150)
+                }
+                className="ps-4 py-3"
+              />
+              {showSuggestions && suggestions.length > 0 && (
+                <ListGroup
+                  className="position-absolute w-100 shadow-sm mt-1 rounded"
+                  style={{ zIndex: 5, maxHeight: "200px", overflowY: "auto" }}
                 >
-                    ✕
-                </span>
-                <h1 className="text-lg font-semibold">Plan Your Adventure</h1>
-                <span className="w-6"></span>
-            </header>
+                  {suggestions.map((city, index) => (
+                    <ListGroup.Item
+                      key={index}
+                      action
+                      onClick={() => handleSelectSuggestion(city)}
+                      className="py-2"
+                    >
+                      {city}
+                    </ListGroup.Item>
+                  ))}
+                </ListGroup>
+              )}
+            </Col>
+          </Row>
 
-            <main className="p-5">
-                
-                {/* Inputs Section */}
-                {/* ... (input fields) ... */}
-                <section className="mb-8">
-                    <InputField label="Budget" placeholder="Enter budget range" Icon={FaMoneyBillWave} />
-                    <InputField label="Dates" placeholder="Select start and end dates" Icon={FaCalendarAlt} />
-                    <InputField label="Destination" placeholder="Explorational Regions & Sites" Icon={FaMapMarkerAlt} />
-                </section>
-
-                {/* Interests Section */}
-                <section className="mb-8">
-                    <h2 className="text-lg font-bold text-gray-800 mb-3">Interests</h2>
-                    <div className="flex flex-wrap gap-2">
-                        {['Mountains & Trekking', 'Culture of Heritage', 'Solo Nightlife', 'Food Travel'].map(interest => (
-                            <ChipButton 
-                                key={interest}
-                                label={interest}
-                                isSelected={selectedInterests.includes(interest)}
-                                onClick={() => toggleInterest(interest)}
-                            />
-                        ))}
-                    </div>
-                </section>
-
-                {/* Toggles Section */}
-                <section className="mb-8 p-4 bg-white rounded-xl shadow-sm">
-                    <CheckboxToggle label="Eco-Friendly Options" isChecked={isEcoFriendly} onChange={() => setIsEcoFriendly(prev => !prev)} />
-                    <CheckboxToggle label="Pet-Friendly" isChecked={isPetFriendly} onChange={() => setIsPetFriendly(prev => !prev)} />
-                </section>
-
-            </main>
-
-            {/* Sticky Footer Button */}
-            <footer className="sticky bottom-0 bg-white p-5 border-t border-gray-100 shadow-lg">
-                <button 
-                    onClick={handlePlanSubmit} // 🛑 USE NEW HANDLER
-                    className="w-full py-3 rounded-xl text-white font-bold transition-all duration-300
-                    bg-gradient-to-r from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 shadow-lg shadow-green-300"
+          {/* 🎯 Interests */}
+          <div className="mt-4">
+            <h6 className="fw-bold text-muted mb-2">Interests</h6>
+            <div className="d-flex flex-wrap gap-2">
+              {interestsList.map((interest) => (
+                <Button
+                  key={interest}
+                  type="button"
+                  variant={
+                    formData.interests.includes(interest)
+                      ? "success"
+                      : "outline-secondary"
+                  }
+                  size="sm"
+                  onClick={() => handleInterestToggle(interest)}
+                  className="rounded-pill px-3 py-2"
                 >
-                    Craft My Itinerary with AI
-                </button>
-            </footer>
+                  {interest}
+                </Button>
+              ))}
+            </div>
+          </div>
 
-        </div>
-    );
+          {/* ♻️ Toggles */}
+          <Row className="mt-4">
+            <Col
+              md={6}
+              className="d-flex justify-content-between align-items-center"
+            >
+              <span>Eco-Friendly Options</span>
+              <Form.Check
+                type="switch"
+                id="eco-friendly"
+                checked={formData.ecoFriendly}
+                onChange={() =>
+                  handleChange("ecoFriendly", !formData.ecoFriendly)
+                }
+              />
+            </Col>
+            <Col
+              md={6}
+              className="d-flex justify-content-between align-items-center"
+            >
+              <span>Pet-Friendly</span>
+              <Form.Check
+                type="switch"
+                id="pet-friendly"
+                checked={formData.petFriendly}
+                onChange={() =>
+                  handleChange("petFriendly", !formData.petFriendly)
+                }
+              />
+            </Col>
+          </Row>
+
+          {/* 🚀 Submit */}
+          <div className="text-center mt-5">
+            <Button
+            onClick={handleSubmit}
+              type="submit"
+              className="fw-bold px-5 py-3 rounded-pill"
+              style={{
+                backgroundColor: "#00c6ff",
+                border: "none",
+                fontSize: "18px",
+              }}
+            >
+              Craft My Itinerary with AI
+            </Button>
+          </div>
+        </Form>
+      </Container>
+    </div>
+  );
 };
 
 export default PlannerForm;
