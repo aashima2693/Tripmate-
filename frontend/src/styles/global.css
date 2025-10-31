@@ -7,15 +7,18 @@
     --color-secondary-green: #52D8AC;
     
     /* Background & Text */
-    --color-bg-light: #F4F7FB;       /* Slightly off-white background */
-    --color-text-dark: #2A3A4F;      /* Main headings/dark text */
-    --color-text-subtle: #6B7280;    /* Subtitles/helper text */
+    --color-bg-light: #F4F7FB; 	 	 /* Slightly off-white background */
+    --color-text-dark: #2A3A4F; 	 	 /* Main headings/dark text */
+    --color-text-subtle: #6B7280; 	 /* Subtitles/helper text */
     --color-white: #FFFFFF;
     
     /* Global Spacing/Shadows */
     --spacing-md: 1.5rem;
     --border-radius: 0.75rem;
     --shadow-light: 0 8px 25px rgba(0, 0, 0, 0.15); /* Updated for better card lift */
+
+    /* Custom Gradient for Text/Accents (Based on Hero) */
+    --gradient-blue-green: linear-gradient(90deg, var(--color-primary-blue) 0%, var(--color-secondary-green) 100%);
 }
 
 /* ------------------------------------------- */
@@ -93,4 +96,42 @@ p {
 
 .card-solid-green {
     background-color: var(--color-secondary-green);
+}
+
+/* --- Navbar Styling for Gradient Brand --- */
+.navbar-brand-gradient {
+    font-weight: 700;
+    font-size: 1.5rem;
+    background: var(--gradient-blue-green);
+    /* Apply gradient as text color */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+}
+
+
+/* ------------------------------------------- */
+/* 4. Companion Finder & Card Styles (New) */
+/* ------------------------------------------- */
+
+.companion-card {
+    /* Use custom border radius from variables */
+    border-radius: calc(var(--border-radius) + 0.5rem) !important; /* Slightly larger radius for cards */
+    
+    /* Ensure smooth transition for hover effect */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; 
+    
+    /* Initial shadow, use standard Bootstrap classes if needed, but this prevents conflict */
+}
+
+.companion-card:hover {
+    /* Lifts the card slightly when hovered (8px lift) */
+    transform: translateY(-8px) !important; 
+    
+    /* Use the defined variable shadow for consistency */
+    box-shadow: 0 1rem 3rem rgba(0, 78, 255, 0.15) !important; /* Based on primary blue color */
+    
+    /* Indicate that the card is clickable */
+    cursor: pointer;
 }
