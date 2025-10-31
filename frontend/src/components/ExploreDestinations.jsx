@@ -10,7 +10,7 @@ const destinations = [
     { name: "Mountains", image: "https://images.unsplash.com/photo-1501785888041-af3ef285b470" },
     { name: "Beaches", image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e" },
     { name: "Cities", image: "https://images.unsplash.com/photo-1494972308805-463bc619d34e" },
-    { name: "Deserts", image: "https://unsplash.com/photos/desert-under-clear-blue-sky-during-daytime-PP8Escz15d8" },
+    { name: "Deserts", image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e" },
     { name: "Islands", image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e" },
     { name: "Forests", image: "https://images.unsplash.com/photo-1501785888041-af3ef285b470" },
     { name: "Historical Sites", image: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe" },

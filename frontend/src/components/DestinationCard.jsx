@@ -17,6 +17,7 @@ const DestinationCard = ({ name, image }) => {
           {/* Card Body to hold the image and text */}
           <div className="position-relative">
             {/* Image */}
+            
             <Card.Img
               src={image}
               alt={name}

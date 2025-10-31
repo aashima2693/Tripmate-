@@ -20,7 +20,7 @@ const PlannerForm = () => {
 
     const [formData, setFormData] = useState({
         budget: "",
-        destination: "",
+        destination: "",            
         interests: [], // still an array internally
         duration_days: "",
     });
