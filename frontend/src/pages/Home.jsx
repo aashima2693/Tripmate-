@@ -15,7 +15,6 @@ const Home = () => {
 
   return (
     <div className="landing-page-container">
-      <Navbar />
 
       {/* 🌄 Hero Section */}
       <header className="hero-gradient-bg">

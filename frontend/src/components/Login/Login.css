@@ -1,0 +1,102 @@
+.login {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.3);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-popup-container {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  padding: 32px 28px 24px 28px;
+  min-width: 340px;
+  max-width: 90vw;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  position: relative;
+}
+
+.login-popup-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.login-popup-title h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.login-popup-title svg {
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.login-popup-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.login-popup-inputs input {
+  padding: 12px 14px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  background: #fafafa;
+  transition: border 0.2s;
+}
+
+.login-popup-inputs input:focus {
+  border: 1.5px solid #da801a;
+  background: #fff;
+}
+
+button[type="submit"] {
+  background: #fa5c1c;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background 0.2s;
+}
+
+button[type="submit"]:hover {
+  background: #da801a;
+}
+
+.login-popup-condition {
+  display: flex;
+  align-items: center;
+  font-size: 0.95rem;
+  color: #555;
+  gap: 8px;
+}
+
+.login-popup-condition input[type="checkbox"] {
+  accent-color: #fa5c1c;
+}
+
+.login-popup-toggle {
+  text-align: center;
+  font-size: 1rem;
+  margin-top: 4px;
+}
+
+.login-popup-toggle span {
+  color: #fa5c1c;
+  cursor: pointer;
+  font-weight: 500;
+}
