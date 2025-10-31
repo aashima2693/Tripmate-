@@ -1,34 +1,27 @@
 // src/components/Navbar.jsx
-
 import React from 'react';
-// Assuming you will create Navbar.css next for desktop specific styles
-import '../styles/Navbar.css';
-// Use an icon for the profile, mirroring the original image
-import { FaUserCircle } from 'react-icons/fa'; 
+import { Link } from 'react-router-dom';
 
-const Navbar = () => {
-  return (
-    <nav className="navbar">
-      <div className="navbar-logo">
-        <a href="/">TripMate</a> 
-      </div>
-      
-      {/* PUSHBACK: Real websites need navigation links, not just a logo.
-        Add these later once you have more pages/sections.
-      */}
-      <div className="navbar-links">
-        {/*
-        <a href="#features">Features</a>
-        <a href="#destinations">Destinations</a>
-        <a href="/login">Login</a>
-        */}
-      </div>
-      
-      <div className="navbar-profile">
-        <FaUserCircle size={30} color="var(--color-text-dark)" />
+const Navbar = () => (
+    <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm sticky-top">
+      <div className="container">
+        <Link to="/" className="navbar-brand navbar-brand-gradient">TripMate</Link>
+        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav me-auto fw-medium">
+            <li className="nav-item"><Link to="/" className="nav-link text-dark">Home</Link></li>
+            <li className="nav-item"><Link to="/companions" className="nav-link text-dark">Companions</Link></li>
+            <li className="nav-item"><Link to="/loan" className="nav-link text-dark">Loans</Link></li>
+          </ul>
+          <div className="d-flex">
+            <Link to="/login" className="btn btn-outline-info me-2 fw-bold">Log In</Link>
+            <Link to="/signup" className="btn btn-success fw-bold">Sign Up</Link>
+          </div>
+        </div>
       </div>
     </nav>
-  );
-};
+);
 
 export default Navbar;
