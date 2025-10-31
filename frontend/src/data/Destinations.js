@@ -1,0 +1,68 @@
+// src/data/Destinations.js
+
+export const popularIndianDestinations = [
+  {
+    id: 1,
+    name: "Goa",
+    image: "https://images.unsplash.com/photo-1616766418871-33758376e3d5?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    description: "Known for its stunning beaches, vibrant nightlife, and rich Portuguese heritage.",
+    bestTime: "Nov-Feb",
+    tags: ["Beaches", "Party", "Culture"],
+  },
+  {
+    id: 2,
+    name: "Jaipur, Rajasthan",
+    image: "https://images.unsplash.com/photo-1548011242-7a09c2794380?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    description: "The 'Pink City' is famous for its majestic forts, palaces, and colorful bazaars.",
+    bestTime: "Oct-Mar",
+    tags: ["History", "Culture", "Architecture"],
+  },
+  {
+    id: 3,
+    name: "Kerala Backwaters",
+    image: "https://images.unsplash.com/photo-1554580665-d91d1e4c84be?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    description: "Experience tranquil houseboat cruises through lush backwaters and serene villages.",
+    bestTime: "Sep-Mar",
+    tags: ["Nature", "Relaxation", "Houseboats"],
+  },
+  {
+    id: 4,
+    name: "Leh-Ladakh",
+    image: "https://images.unsplash.com/photo-1606540605988-c700140c83a7?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    description: "A high-altitude desert with stunning barren landscapes, monasteries, and adventure sports.",
+    bestTime: "May-Oct",
+    tags: ["Adventure", "Mountains", "Biking"],
+  },
+  {
+    id: 5,
+    name: "Varanasi, Uttar Pradesh",
+    image: "https://images.unsplash.com/photo-1620313554432-881c107293a5?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    description: "The spiritual capital of India, known for its ghats, ancient temples, and sacred Ganges river.",
+    bestTime: "Oct-Mar",
+    tags: ["Spiritual", "Culture", "History"],
+  },
+  {
+    id: 6,
+    name: "Manali, Himachal Pradesh",
+    image: "https://images.unsplash.com/photo-1601618361546-e5c464c5885f?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    description: "A popular hill station offering breathtaking mountain views, adventure sports, and serene valleys.",
+    bestTime: "Apr-Oct",
+    tags: ["Mountains", "Adventure", "Honeymoon"],
+  },
+  {
+    id: 7,
+    name: "Agra, Uttar Pradesh",
+    image: "https://images.unsplash.com/photo-1579895204222-3580521e6c38?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    description: "Home to the iconic Taj Mahal, Agra Fort, and a rich Mughal history.",
+    bestTime: "Oct-Mar",
+    tags: ["History", "Architecture", "Landmark"],
+  },
+  {
+    id: 8,
+    name: "Udaipur, Rajasthan",
+    image: "https://images.unsplash.com/photo-1616422361730-a92ad6930062?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    description: "The 'City of Lakes' offers stunning palaces, romantic boat rides, and vibrant markets.",
+    bestTime: "Oct-Mar",
+    tags: ["Romantic", "Lakes", "Palaces"],
+  },
+];
