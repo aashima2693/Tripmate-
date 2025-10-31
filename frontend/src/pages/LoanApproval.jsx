@@ -132,7 +132,7 @@ const LoanApproval = () => {
                                 </ul>
                                 
                                 <div className="text-center pt-4">
-                                    <a href="#" className="fs-5 fw-bold text-decoration-none next-step-icon">View Detailed Loan Documents</a>
+                                    <a href="#" className="fs-5 fw-bold text-decoration-none next-step-icon"onClick={handleShowDocuments}>View Detailed Loan Documents</a>
                                 </div>
                             </div>
                         </>

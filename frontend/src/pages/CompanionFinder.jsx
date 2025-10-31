@@ -1,9 +1,9 @@
 // src/pages/CompanionFinder.jsx
 
-import React, { useState, useEffect, useCallback } from 'react'; // 🛑 Changed useMemo to useEffect/useState
+import React, { useState, useEffect, useCallback } from 'react'; 
 import { Container, Row, Col, Dropdown, DropdownButton, Card, Form, InputGroup } from 'react-bootstrap';
 import CompanionCard from '../components/CompanionCard';
-import { getFilteredCompanions } from '../firebase/CompanionService'; // 🛑 NEW IMPORT
+import { getFilteredCompanions } from '../firebase/CompanionService';
 import { 
     // ... all data imports 
     getAgeRange, 
@@ -17,14 +17,12 @@ import {
 
 const CompanionFinder = () => {
     const [filters, setFilters] = useState({ /* ... your filter state ... */ });
-    const [filteredCompanions, setFilteredCompanions] = useState([]); // 🛑 State for results
-    const [loading, setLoading] = useState(false); // 🛑 Loading state
+    const [filteredCompanions, setFilteredCompanions] = useState([]); 
+    const [loading, setLoading] = useState(false); 
 
     const handleFilterChange = (filterName, value) => {
         setFilters(prev => ({ ...prev, [filterName]: value }));
     };
-
-    // 🛑 Replaced useMemo with a data fetching effect
     useEffect(() => {
         const fetchCompanions = async () => {
             setLoading(true);
@@ -46,8 +44,7 @@ const CompanionFinder = () => {
         return () => clearTimeout(delaySearch); // Cleanup debounce
     }, [filters]); // Rerun effect whenever filters change
 
-    // ... (rest of the component JSX, UNCHANGED) ...
-
+    
     return (
         <Container className="my-5">
             {/* ... Header and Filter Bar ... */}
