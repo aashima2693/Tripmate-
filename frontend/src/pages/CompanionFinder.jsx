@@ -1,4 +1,5 @@
-// src/pages/CompanionFinder.jsx (FINAL CORRECTED VERSION)
+// src/pages/CompanionFinder.jsx
+
 import React, { useState, useMemo } from 'react';
 import { Container, Row, Col, Dropdown, DropdownButton, Card, Form, InputGroup } from 'react-bootstrap';
 import CompanionCard from '../components/CompanionCard';
@@ -9,13 +10,13 @@ import {
   ageRanges, 
   availableMonths,
   destinationList,
-  locationList // 👈 Ensure you have this new import from ../data/Companions
+  locationList
 } from '../data/Companions';
 
 const CompanionFinder = () => {
   const [filters, setFilters] = useState({
     destination: 'All Destinations',
-    location: 'All Locations', // 👈 New state property
+    location: 'All Locations',
     age: 'All Ages',
     interest: 'All Interests',
     month: 'All Dates',
@@ -31,10 +32,10 @@ const CompanionFinder = () => {
     
     return companionData.filter(companion => {
       
-      // 1. Destination Filter Check (WAS MISSING)
+      // 1. Destination Filter Check
       const destinationMatch = filters.destination === 'All Destinations' || companion.destination === filters.destination;
       
-      // 2. Location Filter Check (NEW LOGIC)
+      // 2. Location Filter Check (New Feature)
       const locationMatch = filters.location === 'All Locations' || companion.startingLocation === filters.location; 
       
       // 3. Age Filter Check
@@ -57,7 +58,7 @@ const CompanionFinder = () => {
   return (
     <Container className="my-5">
       
-      {/* 💥 Modern Gradient Header Banner */}
+      {/* Modern Gradient Header Banner */}
       <Card className="mb-5 shadow-lg border-0 hero-gradient-bg">
         <Card.Body className="text-center py-4">
           <h1 className="fw-bolder m-0 text-white">🌍 Find Your TripMate</h1>
@@ -65,7 +66,7 @@ const CompanionFinder = () => {
         </Card.Body>
       </Card>
 
-      {/* Filter and Search Bar */}
+      {/* Filter and Search Bar (Responsive Layout) */}
       <div className="p-3 mb-4 rounded-4 shadow-sm" style={{ backgroundColor: 'var(--color-white)' }}>
         <Row className="g-3 align-items-center">
           
@@ -83,10 +84,10 @@ const CompanionFinder = () => {
             </InputGroup>
           </Col>
 
-          {/* Filters (Now takes up 9 columns on large screens) */}
+          {/* Filters (Compact Layout) */}
           <Col lg={9} md={12} className="d-flex flex-wrap justify-content-lg-end justify-content-center gap-2">
             
-            {/* DESTINATION Dropdown (Primary Filter) */}
+            {/* DESTINATION Dropdown */}
             <DropdownButton
               title={`Destination: ${filters.destination}`}
               variant="primary" 
@@ -99,7 +100,7 @@ const CompanionFinder = () => {
               ))}
             </DropdownButton>
             
-            {/* STARTING LOCATION Dropdown (NEW UI ELEMENT) */}
+            {/* STARTING LOCATION Dropdown */}
             <DropdownButton
               title={`Location: ${filters.location}`}
               variant="outline-primary" 
@@ -107,7 +108,6 @@ const CompanionFinder = () => {
             >
               <Dropdown.Item onClick={() => handleFilterChange('location', 'All Locations')} active={filters.location === 'All Locations'}>All Locations</Dropdown.Item>
               <Dropdown.Divider />
-              {/* You must define locationList in src/data/Companions */}
               {locationList.map(location => (
                 <Dropdown.Item key={location} onClick={() => handleFilterChange('location', location)} active={filters.location === location}>{location}</Dropdown.Item>
               ))}

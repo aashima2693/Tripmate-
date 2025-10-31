@@ -1,0 +1,94 @@
+/* Custom properties for easy color updates */
+:root {
+    --tm-primary: #0056b3;  /* Rich Ocean Blue for primary branding/trust */
+    --tm-accent: #20c997;   /* Lively Teal/Mint for the main CTA (based on mobile UI) */
+}
+
+/* -------------------------------------- */
+/* Global Overrides (To link with new palette) */
+/* -------------------------------------- */
+
+.text-primary {
+    color: var(--tm-primary) !important;
+}
+/* Ensure icons/text in the primary flow use the brand color */
+.bi-pencil-square, .bi-file-earmark-check, .bi-wallet2 {
+    color: var(--tm-primary); 
+}
+
+
+/* -------------------------------------- */
+/* 1. Hero Section Styling */
+/* -------------------------------------- */
+
+.hero-section {
+    min-height: 70vh;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    z-index: 1; 
+}
+
+/* Dark overlay for better text contrast over the background image */
+.hero-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); 
+    z-index: -1;
+}
+
+/* Loan Widget Card */
+.loan-card {
+    background-color: white; 
+    border: none;
+    border-top: 6px solid var(--tm-primary); /* Bold primary color top border */
+}
+
+/* Apply Now Button (Accent Color) */
+.apply-btn {
+    background-color: var(--tm-accent); 
+    border-color: var(--tm-accent);
+    transition: background-color 0.3s ease;
+}
+
+.apply-btn:hover {
+    background-color: #1aae84; 
+    border-color: #1aae84;
+}
+
+
+/* -------------------------------------- */
+/* 2. How It Works Section Styling */
+/* -------------------------------------- */
+
+.step-card {
+    /* subtle lift on hover for engagement */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.step-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1) !important;
+}
+
+.step-card i {
+    font-size: 2.5rem;
+}
+
+
+/* -------------------------------------- */
+/* 3. Why Choose TripMate Section Styling */
+/* -------------------------------------- */
+
+.list-group-item i {
+    font-size: 1.5rem;
+}
+
+/* Subtle background change on hover for list items */
+.list-group-item-action:hover {
+    background-color: #f8f9fa;
+}

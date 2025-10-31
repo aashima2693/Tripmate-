@@ -1,168 +1,221 @@
 import React, { useState } from 'react';
-import { Menu, Search, PiggyBank, ChevronDown, CheckCircle, HandCoins } from 'lucide-react';
-import { useNavigate } from 'react-router-dom'; // 🛑 REQUIRED
+import '../styles/TravelLoanScreen.css'; 
+// Assuming Bootstrap's JavaScript is included globally in your project to handle the modal
 
-// Define the core color palette
-const ACCENT_COLOR = '#00bfa5'; // Teal
-const LOAN_CARD_COLOR = '#4CAF50'; // Greenish hue from the image
+// ----------------------------------------------------------------------
+// NEW COMPONENT: ApplicationModal
+// This modal will appear when the user clicks 'Apply Now'
+// ----------------------------------------------------------------------
+const ApplicationModal = ({ show, handleClose }) => {
+    // Note: In a real app, you'd use separate states for different steps (e.g., Step 1: KYC, Step 2: Income, Step 3: Confirmation)
+    if (!show) {
+        return null;
+    }
 
-// Component for a styled input field within the Loan Card
-const LoanInputField = ({ label, value, onChange, currency = false, dropdown = false, placeholder }) => (
-  <div>
-    <label className="text-sm font-semibold text-white block mb-1">{label}</label>
-    <div className="relative">
-      <input
-        type="text"
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        className="w-full py-3 px-4 text-lg font-medium border-none focus:outline-none focus:ring-1 focus:ring-white rounded-lg text-gray-800"
-      />
-      {dropdown && (
-        <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-500 pointer-events-none" />
-      )}
-      {currency && (
-        <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-lg font-bold text-gray-600">₹</span>
-      )}
-    </div>
-  </div>
-);
+    return (
+        // Using fixed positioning and backdrop for the modal effect
+        <div className="modal d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+            <div className="modal-dialog modal-lg modal-dialog-centered">
+                <div className="modal-content rounded-4 shadow-lg">
+                    <div className="modal-header bg-primary text-white border-0 rounded-top-4">
+                        <h5 className="modal-title fw-bold">Complete Your Loan Application</h5>
+                        <button type="button" className="btn-close btn-close-white" onClick={handleClose} aria-label="Close"></button>
+                    </div>
+                    <div className="modal-body p-4">
+                        <h6 className="mb-3 text-primary fw-bold">Step 1 of 3: Personal & KYC Details</h6>
+                        
+                        {/* Sample form fields for the application step */}
+                        <form>
+                            <div className="row g-3">
+                                <div className="col-md-6">
+                                    <label className="form-label">Full Name</label>
+                                    <input type="text" className="form-control" placeholder="John Doe" />
+                                </div>
+                                <div className="col-md-6">
+                                    <label className="form-label">Email Address</label>
+                                    <input type="email" className="form-control" placeholder="example@email.com" />
+                                </div>
+                                <div className="col-12">
+                                    <label className="form-label">Aadhaar / PAN Number</label>
+                                    <input type="text" className="form-control" placeholder="Enter ID Proof Number" />
+                                </div>
+                                <div className="col-12">
+                                    <div className="form-check">
+                                        <input className="form-check-input" type="checkbox" id="termsCheck" />
+                                        <label className="form-check-label small" htmlFor="termsCheck">
+                                            I agree to the <a href="#" className="text-primary fw-bold">Terms and Conditions</a>.
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div className="modal-footer border-0 p-4">
+                        <button type="button" className="btn btn-secondary rounded-pill" onClick={handleClose}>Cancel</button>
+                        <button type="button" className="btn apply-btn rounded-pill">Proceed to Income Details</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+// ----------------------------------------------------------------------
 
-
-// Main App component for the TripMate Web Loan Application
 const TravelLoanScreen = () => {
-  const navigate = useNavigate(); // 🛑 Initialize hook
-  const [loanAmount, setLoanAmount] = useState('50,000');
-  const [loanTenure, setLoanTenure] = useState('3 - 12 months');
-  
-  const howItWorksSteps = [
-    { icon: <CheckCircle className="w-5 h-5" style={{ color: ACCENT_COLOR }} />, text: '1. Enter Details' },
-    { icon: <CheckCircle className="w-5 h-5" style={{ color: ACCENT_COLOR }} />, text: '2. NBFC Approval' },
-    { icon: <CheckCircle className="w-5 h-5" style={{ color: ACCENT_COLOR }} />, text: '3. Funds to TripMate Wallet' },
-  ];
-  
-  // 🛑 HANDLER TO NAVIGATE TO SUBMITTED SCREEN
-  const handleApplyNow = () => {
-    // Perform form submission logic here
-    navigate('/loan/submitted'); 
-  };
+    // State to control the visibility of the application modal
+    const [showModal, setShowModal] = useState(false);
 
-  return (
-    // Outer Container for the entire website view
-    <div className="min-h-screen bg-gray-50 font-sans flex flex-col items-center">
-      
-      {/* GLOBAL HEADER: Full-width top navigation */}
-      <header className="w-full bg-white shadow-md">
-        <div className="max-w-6xl mx-auto py-4 px-6 flex justify-between items-center">
-          <div className="flex items-center space-x-2">
-            <Menu className="w-6 h-6 text-gray-700 md:hidden" />
-            <h1 className="text-2xl font-extrabold text-gray-900">TripMate <span className='text-sm font-medium text-gray-500'>Finance</span></h1>
-          </div>
-          <nav className="hidden md:flex space-x-8 text-gray-600 font-medium">
-            <a href="#" className="font-bold text-teal-600 transition border-b-2 border-teal-600">Apply Loan</a>
-            <a href="#" className="hover:text-teal-600 transition">Status</a>
-            <a href="#" className="hover:text-teal-600 transition">Support</a>
-          </nav>
-          <button className="hidden md:block px-4 py-2 text-white font-semibold rounded-lg" style={{ backgroundColor: ACCENT_COLOR }}>
-            My Account
-          </button>
-        </div>
-      </header>
+    const handleApplyNow = (e) => {
+        e.preventDefault(); // Stop any default form submission/redirection
+        setShowModal(true); // Open the application modal
+    };
 
-      {/* MAIN CONTENT AREA: Loan Application Form */}
-      <main className="flex-1 w-full max-w-6xl p-6 md:p-10 flex flex-col lg:flex-row gap-10">
+    const handleCloseModal = () => setShowModal(false);
 
-        {/* LEFT COLUMN: Main Application Form and Details */}
-        <div className="lg:w-2/3">
-          
-          {/* HEADER SECTION: Gradient Background for Title */}
-          <div className="bg-gradient-to-r from-teal-500 to-cyan-500 rounded-xl p-8 text-white shadow-lg mb-8">
-            <h2 className="text-4xl font-extrabold leading-tight">Instant Travel Loan</h2>
-            <p className="text-xl font-light mt-1">Funding your dream journey, made easy.</p>
-            
-            <div className="flex items-center space-x-3 mt-4">
-                <PiggyBank className="w-6 h-6 text-pink-300 fill-pink-500" />
-                <span className="text-sm font-semibold bg-white bg-opacity-20 px-3 py-1 rounded-full">
-                    NBFC Partnered
-                </span>
-            </div>
-          </div>
-          {/* END HEADER SECTION */}
+    // --- Hero Section / Loan Application Widget ---
+    const HeroSection = () => (
+        // ... (existing HeroSection structure) ...
+        <section className="hero-section text-white d-flex align-items-center py-5" 
+                 style={{ backgroundImage: "url('path/to/travel-image.jpg')" }}>
+            <div className="container py-5">
+                <div className="row">
+                    <div className="col-lg-6 mb-4 mb-lg-0">
+                        <h1 className="display-4 fw-bold">Fund Your Dream Journey.</h1>
+                        <p className="lead mb-4">Instant Travel Loans tailored for your next adventure. Fast approval, competitive rates.</p>
+                        <div className="d-flex flex-wrap gap-3">
+                            <span className="badge bg-light text-dark p-2 rounded-pill"><i className="bi bi-clock me-1"></i> Instant Approval</span>
+                            <span className="badge bg-light text-dark p-2 rounded-pill"><i className="bi bi-currency-dollar me-1"></i> Competitive Rates</span>
+                            <span className="badge bg-light text-dark p-2 rounded-pill"><i className="bi bi-wallet me-1"></i> Funds to Wallet</span>
+                        </div>
+                    </div>
+                    <div className="col-lg-5 offset-lg-1">
+                        {/* Loan Application Card (Widget) */}
+                        <div className="card p-4 shadow-lg rounded-4 loan-card">
+                            <h2 className="h4 card-title mb-4 text-dark">Instant Travel Loan Application</h2>
+                            
+                            {/* The form structure remains the same */}
+                            <form>
+                                <div className="mb-3 input-group input-group-lg">
+                                    <span className="input-group-text bg-light text-muted">₹</span>
+                                    <input type="text" className="form-control" placeholder="Required Loan Amount" defaultValue="50,000" />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="repaymentPeriod" className="form-label text-dark">Repayment Period</label>
+                                    <select id="repaymentPeriod" className="form-select form-select-lg">
+                                        <option>3 - 12 months</option>
+                                        <option>13 - 24 months</option>
+                                        <option>25 - 36 months</option>
+                                    </select>
+                                </div>
+                                {/* **MODIFICATION HERE:** Call the custom handler */}
+                                <button 
+                                    type="submit" 
+                                    className="btn btn-lg w-100 fw-bold rounded-pill shadow-sm apply-btn"
+                                    onClick={handleApplyNow} 
+                                >
+                                    Apply Now
+                                </button>
+                            </form>
+                            <small className="text-center mt-3 text-muted">Instant Approval (usually less than 5 mins)</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
 
-          {/* Search/Filter Bar */}
-          <div className="relative mb-8">
-            <input
-              type="text"
-              placeholder="Search Financial Providers"
-              className="w-full py-4 pl-12 pr-4 border-2 border-gray-300 rounded-xl focus:ring-[#00bfa5] focus:border-[#00bfa5] text-lg transition duration-150"
-            />
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400" />
-          </div>
+    // ... (HowItWorksSection and WhyTripMateSection remain the same) ...
 
-          {/* LOAN INPUT CARD - Green background from image */}
-          <div className="p-8 rounded-xl shadow-xl mb-8" style={{ backgroundColor: LOAN_CARD_COLOR }}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="relative">
-                <LoanInputField
-                  label="Required Loan Amount"
-                  value={loanAmount}
-                  onChange={(e) => setLoanAmount(e.target.value)}
-                  currency={true}
-                />
-                <span className="absolute right-0 top-1/2 transform -translate-y-1/2 text-4xl font-extrabold text-white opacity-80 mr-4 hidden md:block">₹</span>
-              </div>
-              
-              <LoanInputField
-                label="Repayment Period"
-                value={loanTenure}
-                onChange={(e) => setLoanTenure(e.target.value)}
-                dropdown={true}
-              />
-            </div>
-          </div>
+    const HowItWorksSection = () => (
+        <section className="py-5 bg-light">
+            <div className="container">
+                <h2 className="text-center mb-5 fw-bold text-dark">How It Works: 3 Simple Steps</h2>
+                <div className="row text-center">
+                    
+                    {/* Step 1 */}
+                    <div className="col-md-4 mb-4">
+                        <div className="p-4 bg-white rounded-3 shadow-sm h-100 step-card">
+                            <i className="bi bi-pencil-square display-4 text-primary mb-3"></i> 
+                            <h3 className="h5 fw-bold text-dark">1. Enter Details</h3>
+                            <p className="text-muted">Fill out the quick online application form with your required details.</p>
+                        </div>
+                    </div>
 
-          {/* Primary Action Button */}
-          <button
-            className="w-full py-5 text-xl text-white font-bold rounded-xl shadow-lg transition duration-150 ease-in-out hover:shadow-xl hover:opacity-90 mt-4"
-            style={{ backgroundColor: ACCENT_COLOR }}
-            onClick={handleApplyNow} // 🛑 CALL THE NAVIGATION HANDLER
-          >
-            Apply Now
-          </button>
-        </div>
+                    {/* Step 2 */}
+                    <div className="col-md-4 mb-4">
+                        <div className="p-4 bg-white rounded-3 shadow-sm h-100 step-card">
+                            <i className="bi bi-file-earmark-check display-4 text-primary mb-3"></i> 
+                            <h3 className="h5 fw-bold text-dark">2. NBFC Approval</h3>
+                            <p className="text-muted">Get **Instant Approval** from our NBFC partner. Quick and seamless.</p>
+                        </div>
+                    </div>
 
-        {/* RIGHT COLUMN: How It Works & Information */}
-        <div className="lg:w-1/3 bg-white p-6 rounded-xl shadow-md border border-gray-100 h-fit">
-            <h3 className="text-xl font-bold text-gray-800 mb-4">How It Works</h3>
-            <ul className="space-y-4">
-                {howItWorksSteps.map((step, index) => (
-                    <li key={index} className="flex items-start space-x-3 text-base text-gray-700">
-                        {step.icon}
-                        <p>{step.text}</p>
-                    </li>
-                ))}
-                <li className="text-sm text-gray-500 pt-2 border-t mt-4 border-gray-100">
-                    Your loan is disbursed securely into TripMate Wallet, ready for travel-related payments.
-                </li>
-            </ul>
+                    {/* Step 3 */}
+                    <div className="col-md-4 mb-4">
+                        <div className="p-4 bg-white rounded-3 shadow-sm h-100 step-card">
+                            <i className="bi bi-wallet2 display-4 text-primary mb-3"></i> 
+                            <h3 className="h5 fw-bold text-dark">3. Funds to TripMate Wallet</h3>
+                            <p className="text-muted">Your loan is securely disbursed to your **TripMate Wallet** for travel payments.</p>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+    );
 
-            <div className='mt-8 pt-6 border-t border-gray-100'>
-                <h3 className="text-xl font-bold text-gray-800 mb-4">Why TripMate?</h3>
-                <ul className="space-y-2 text-sm text-gray-600">
-                    <li>- Instant Approval (usually less than 5 mins)</li>
-                    <li>- Competitive Interest Rates</li>
-                    <li>- Flexible Repayment Options</li>
-                </ul>
-            </div>
-        </div>
-      </main>
+    const WhyTripMateSection = () => (
+        <section className="py-5">
+            <div className="container">
+                <h2 className="text-center mb-5 fw-bold text-dark">Why Choose TripMate Finance?</h2>
+                <div className="row">
+                    <div className="col-lg-8 offset-lg-2">
+                        <div className="list-group list-group-flush shadow-lg rounded-3 overflow-hidden">
+                            
+                            {/* Feature 1 */}
+                            <div className="list-group-item list-group-item-action d-flex align-items-center p-4">
+                                <i className="bi bi-lightning-charge-fill h3 me-3 text-success"></i>
+                                <div>
+                                    <strong className="text-dark">Instant Approval</strong>
+                                    <p className="mb-0 text-muted small">Application approval usually takes **less than 5 minutes**.</p>
+                                </div>
+                            </div>
+                            
+                            {/* Feature 2 */}
+                            <div className="list-group-item list-group-item-action d-flex align-items-center p-4">
+                                <i className="bi bi-percent h3 me-3 text-info"></i>
+                                <div>
+                                    <strong className="text-dark">Competitive Interest Rates</strong>
+                                    <p className="mb-0 text-muted small">Affordable rates tailored to make your travel dreams a reality.</p>
+                                </div>
+                            </div>
 
-      {/* Global Footer (Placeholder) */}
-      <footer className="w-full bg-white mt-12 py-6 border-t border-gray-100 text-center text-gray-500 text-sm">
-        &copy; {new Date().getFullYear()} TripMate Finance. All rights reserved.
-      </footer>
-    </div>
-  );
+                            {/* Feature 3 */}
+                            <div className="list-group-item list-group-item-action d-flex align-items-center p-4">
+                                <i className="bi bi-calendar-check-fill h3 me-3 text-warning"></i>
+                                <div>
+                                    <strong className="text-dark">Flexible Repayment Options</strong>
+                                    <p className="mb-0 text-muted small">Choose a repayment period that suits your financial comfort.</p>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+
+    return (
+        <div className="travel-loan-page">
+            <HeroSection />
+            <HowItWorksSection />
+            <WhyTripMateSection />
+            
+            {/* RENDER THE MODAL */}
+            <ApplicationModal show={showModal} handleClose={handleCloseModal} />
+        </div>
+    );
 };
 
 export default TravelLoanScreen;

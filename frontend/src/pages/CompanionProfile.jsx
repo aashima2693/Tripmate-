@@ -1,37 +1,30 @@
-// src/pages/CompanionProfile.jsx (Final Update for Demo Lifecycle)
+// src/pages/CompanionProfile.jsx
+
 import React, { useState, useMemo } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { Container, Card, Button, Badge, Row, Col, Spinner } from 'react-bootstrap'; // Imported Spinner
-import { companionData } from '../data/Companions';
+import { Container, Card, Button, Badge, Row, Col, Spinner } from 'react-bootstrap';
+import { companionData } from '../data/Companions'; // Ensure correct path
 
 const CompanionProfile = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  // State now includes 'connected'
   const [requestStatus, setRequestStatus] = useState('connect'); // 'connect' | 'pending' | 'connected' 
 
   const companion = useMemo(() => 
     companionData.find(c => c.id === parseInt(id))
   , [id]);
 
-  // ----------------------------------------------------
-  // UPDATED HANDLER: Simulates Acceptance
   const handleSendRequest = () => {
-    // 1. Immediately set to pending
     setRequestStatus('pending');
-
-    // 2. Simulate the companion accepting the request after a delay (e.g., 5 seconds)
     setTimeout(() => {
         console.log(`${companion.name} accepted the request!`);
-        setRequestStatus('connected'); // <-- Automatic shift to 'connected'
-    }, 5000); // 5-second delay for the demo effect
+        setRequestStatus('connected');
+    }, 5000); // 5-second delay for demo acceptance
   };
-  // ----------------------------------------------------
 
   const buttonProps = useMemo(() => {
     // Define the navigation function for the chat button
     const handleChatNavigation = () => {
-        // 💥 CORRECTED NAVIGATION HERE 💥
         navigate(`/chat/${companion.id}`); 
     };
 
@@ -39,19 +32,18 @@ const CompanionProfile = () => {
       case 'pending':
         return {
           text: 'Request Sent (Waiting for Acceptance...)',
-          variant: 'warning', // Use warning or secondary for pending
+          variant: 'warning',
           disabled: true,
           icon: <Spinner animation="border" size="sm" className="me-2" />,
-          onClick: null, // No action while pending
+          onClick: null,
         };
       case 'connected':
         return {
-          // This is the "Continue to Chat" button state
           text: 'Continue to Chat 💬', 
           variant: 'success', 
           disabled: false,
           icon: null,
-          onClick: handleChatNavigation // Use the navigation function
+          onClick: handleChatNavigation // Navigates to chat
         };
       case 'connect':
       default:
@@ -60,10 +52,10 @@ const CompanionProfile = () => {
           variant: 'primary', 
           disabled: false,
           icon: null,
-          onClick: handleSendRequest // Use the custom handler for sending request
+          onClick: handleSendRequest // Triggers simulation
         };
     }
-  }, [requestStatus, companion.name, companion.id, navigate]); // Added companion.id and navigate to dependency array
+  }, [requestStatus, companion?.name, companion?.id, navigate]);
   
   // Mock check for the current user's verification status
   const currentUserIsVerified = true; 
@@ -80,7 +72,6 @@ const CompanionProfile = () => {
   return (
     <Container className="my-5">
       <Card className="shadow-lg border-0 rounded-4">
-        {/* Card Header (Same as before) */}
         <Card.Header className="card-gradient-blue-green text-white p-3 rounded-top-4">
           <Row className="align-items-center">
             <Col><h2 className="mb-0 fw-bold text-white">{companion.name}'s Profile</h2></Col>
@@ -90,9 +81,8 @@ const CompanionProfile = () => {
         
         <Card.Body className="p-5">
           <Row>
-            {/* Left Column (Image & Info - Same as before) */}
+            {/* Left Column (Image & Info) */}
             <Col md={4} className="text-center mb-4 mb-md-0 border-end">
-              {/* ... (Image and badges code) ... */}
               <Card.Img 
                 src={companion.image} 
                 style={{ width: '150px', height: '150px', objectFit: 'cover' }} 
@@ -112,10 +102,10 @@ const CompanionProfile = () => {
             <Col md={8}>
               <h4 className="text-primary border-bottom pb-2 mb-3 fw-bold">About Me</h4>
               <p className="lead text-dark">{companion.bio}</p>
-              {/* ... (Trip Details & Interests) ... */}
+              
               <h4 className="text-primary border-bottom pb-2 my-3 fw-bold">Trip Details & Interests</h4>
               <p className="mb-2">**Destination:** <Badge bg="info" className="p-2">{companion.destination}</Badge></p>
-              {/* ... (Other interests and months badges) ... */}
+              
               <div>
                 <p>**Interests:**</p>
                 {companion.interests.map(interest => (<Badge key={interest} bg="secondary" className="me-2 mb-1 p-2">{interest}</Badge>))}
