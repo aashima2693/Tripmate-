@@ -3,9 +3,58 @@ import { ApiError } from '../../utils/ApiError.js';
 import { ApiResponse } from '../../utils/ApiResponse.js';
 import { asyncHandler } from '../../utils/asyncHandler.js';
 import logger from '../../utils/logger.js';
+import axios from 'axios'; // <-- NEW IMPORT
+
+// CRITICAL: Define the ML service base URL
+const ML_SERVICE_URL = process.env.ML_SERVICE_URL || 'http://localhost:8001'; 
+
+// -------------------------------------------------------------
+// NEW CONTROLLER FUNCTION FOR ML INTEGRATION
+// -------------------------------------------------------------
+export const planTripAI = asyncHandler(async (req, res) => {
+    const { budget, duration_days, interests } = req.body;
+    
+    try {
+        // 1. Send Request to Python FastAPI Service
+        const mlResponse = await axios.post(`${ML_SERVICE_URL}/api/plan-trip`, {
+            budget,
+            duration_days,
+            interests
+        }, {
+            timeout: 30000 // Timeout for ML calculation
+        });
+
+        // 2. Return the data received from the Python service
+        res.status(mlResponse.status).json(
+            new ApiResponse(
+                mlResponse.status, 
+                mlResponse.data, 
+                "AI itinerary generated successfully."
+            )
+        );
+
+    } catch (error) {
+        // 3. Robust Error Handling 
+        if (error.response) {
+            const { status, data } = error.response;
+            logger.error(`ML Service Error (${status}): ${JSON.stringify(data)}`);
+            throw new ApiError(status, data.detail || data.message || "ML Service returned an error.");
+        } else if (error.request) {
+            logger.error(`ML Service Connection Failed: ${error.message}. Check Python server at ${ML_SERVICE_URL}.`);
+            throw new ApiError(503, "The Trip Planner AI service is currently unavailable. Please try again later.");
+        } else {
+            throw new ApiError(500, "Internal error during ML service communication.");
+        }
+    }
+});
+// -------------------------------------------------------------
+
+
+// --- EXISTING CONTROLLER FUNCTIONS ---
 
 // Create a new trip
 export const createTrip = asyncHandler(async (req, res) => {
+    // ... (Your existing createTrip logic here) ...
     const {
         title,
         description,
@@ -46,6 +95,7 @@ export const createTrip = asyncHandler(async (req, res) => {
 
 // Get all trips for current user
 export const getUserTrips = asyncHandler(async (req, res) => {
+    // ... (Your existing getUserTrips logic here) ...
     const { status, page = 1, limit = 10 } = req.query;
 
     const query = { userId: req.user._id };
@@ -75,6 +125,7 @@ export const getUserTrips = asyncHandler(async (req, res) => {
 
 // Get single trip by ID
 export const getTripById = asyncHandler(async (req, res) => {
+    // ... (Your existing getTripById logic here) ...
     const { id } = req.params;
 
     const trip = await Trip.findById(id)
@@ -102,6 +153,7 @@ export const getTripById = asyncHandler(async (req, res) => {
 
 // Update trip
 export const updateTrip = asyncHandler(async (req, res) => {
+    // ... (Your existing updateTrip logic here) ...
     const { id } = req.params;
 
     const trip = await Trip.findById(id);
@@ -130,6 +182,7 @@ export const updateTrip = asyncHandler(async (req, res) => {
 
 // Delete trip
 export const deleteTrip = asyncHandler(async (req, res) => {
+    // ... (Your existing deleteTrip logic here) ...
     const { id } = req.params;
 
     const trip = await Trip.findById(id);
@@ -154,6 +207,7 @@ export const deleteTrip = asyncHandler(async (req, res) => {
 
 // Add companion to trip
 export const addCompanion = asyncHandler(async (req, res) => {
+    // ... (Your existing addCompanion logic here) ...
     const { id } = req.params;
     const { companionId } = req.body;
 
@@ -194,6 +248,7 @@ export const addCompanion = asyncHandler(async (req, res) => {
 
 // Update trip status
 export const updateTripStatus = asyncHandler(async (req, res) => {
+    // ... (Your existing updateTripStatus logic here) ...
     const { id } = req.params;
     const { status } = req.body;
 

@@ -1,21 +1,41 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import pandas as pd
 import joblib
-from src.tripPlanner import generate_itinerary
 
 # ----------------------------------------------------
 # Initialize FastAPI app
 # ----------------------------------------------------
 app = FastAPI(title="TripMate AI - Unified API (Planner + Risk Prediction)")
 
+
 # ----------------------------------------------------
-# Load ML Models and Encoders (Risk Prediction)
+# Trip Itinerary Generator (Dummy Implementation)
+# ----------------------------------------------------
+def generate_itinerary(user_prefs: dict) -> list[dict]:
+    """
+    Simulates generating a trip itinerary based on user preferences.
+    """
+    print(f"DEBUG: Generating itinerary for: {user_prefs}")
+
+    budget_value = user_prefs.get("budget", 0)
+    if budget_value < 100:
+        raise ValueError("Budget is too low to generate a meaningful itinerary.")
+
+    return [
+        {"day": 1, "activity": "Explore historical city center and grab local coffee."},
+        {"day": 2, "activity": f"Visit museum based on interests: {user_prefs.get('interests', 'Art')}"},
+        {"day": 3, "activity": f"Enjoy leisure activity with a budget of {budget_value}"},
+    ]
+
+
+# ----------------------------------------------------
+# Load ML Models (Risk Prediction)
 # ----------------------------------------------------
 try:
     model = joblib.load("models/risk_model.pkl")
     label_encoders = joblib.load("models/label_encoders.pkl")
-    print(" Risk model and encoders loaded successfully.")
+    print("✅ Risk model and encoders loaded successfully.")
 except Exception as e:
     print(f"⚠️ Warning: Could not load risk model or encoders - {e}")
     model, label_encoders = None, None
@@ -24,14 +44,12 @@ except Exception as e:
 # ----------------------------------------------------
 # Request Schemas
 # ----------------------------------------------------
-
-# For Trip Planning
 class TripRequest(BaseModel):
     budget: float
     duration_days: int | None = None
     interests: str | None = None  
 
-# For Risk Prediction
+
 class RiskRequest(BaseModel):
     latitude: float
     longitude: float
@@ -52,28 +70,33 @@ def plan_trip(request: TripRequest):
     """
     Generates travel itinerary based on user preferences.
     """
-    user_prefs = request.dict()
-    recommendations = generate_itinerary(user_prefs)
-    return {
-        "user_preferences": user_prefs,
-        "recommended_spots": recommendations,
-        "count": len(recommendations)
-    }
+    user_prefs = request.model_dump()
+
+    try:
+        recommendations = generate_itinerary(user_prefs)
+        return {
+            "user_preferences": user_prefs,
+            "recommended_spots": recommendations,
+            "count": len(recommendations),
+        }
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=f"Input Error: {str(e)}")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Unexpected Error: {str(e)}")
 
 
 # ----------------------------------------------------
 # Endpoint: Risk Prediction
 # ----------------------------------------------------
-@app.post("/predict_risk")
+@app.post("/predict-risk")
 def predict_risk(request: RiskRequest):
     """
     Predicts risk level for a given location and environment.
     """
     if model is None or label_encoders is None:
-        return {"error": "Model not loaded. Please train and save it first."}
+        raise HTTPException(status_code=500, detail="Model not loaded. Please train and save it first.")
 
     try:
-        # Prepare input for model
         input_data = pd.DataFrame([{
             "latitude": request.latitude,
             "longitude": request.longitude,
@@ -83,19 +106,18 @@ def predict_risk(request: RiskRequest):
             "nearby_incidents": request.incidents,
             "humidity": request.humidity,
             "visibility": request.visibility,
-            "temperature": request.temperature
+            "temperature": request.temperature,
         }])
 
-        # Predict risk
         prediction = model.predict(input_data)[0]
         return {"predicted_risk": prediction}
 
     except Exception as e:
-        return {"error": f"Prediction failed: {e}"}
+        raise HTTPException(status_code=500, detail=f"Prediction failed: {str(e)}")
 
 
 # ----------------------------------------------------
-# Root endpoint (for testing)
+# Root endpoint
 # ----------------------------------------------------
 @app.get("/")
 def root():

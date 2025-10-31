@@ -1,44 +1,47 @@
-// src/components/DestinationCard.jsx
 import React from 'react';
-import { Card, Badge, Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom'; // If you want to link to a destination detail page later
+import { Card, Ratio } from 'react-bootstrap';
+// **Note:** You must have the standard Bootstrap CSS included in your project.
 
-
-const DestinationCard = ({ destination }) => {
-  const navigate = useNavigate();
-
-  // You might want a full destination page later
-  // const handleViewDetails = () => {
-  //   navigate(`/destinations/${destination.id}`);
-  // };
-
+const DestinationCard = ({ name, image }) => {
   return (
-    <Card className="h-100 shadow-sm border-0 rounded-4 overflow-hidden destination-card">
-      <Card.Img 
-        variant="top" 
-        src={destination.image} 
-        alt={destination.name} 
-        style={{ height: '180px', objectFit: 'cover' }} 
-      />
-      <Card.Body className="d-flex flex-column">
-        <Card.Title className="fw-bold text-dark mb-2">
-          {destination.name}
-          <span className="small text-muted ms-2">{`(${destination.bestTime})`}</span>
-        </Card.Title>
-        <Card.Text className="text-muted small flex-grow-1 mb-3">
-          {destination.description}
-        </Card.Text>
-        <div className="mb-3">
-          {destination.tags.map((tag, index) => (
-            <Badge key={index} bg="info" className="me-2 mb-1 p-2 bg-opacity-75">{tag}</Badge>
-          ))}
-        </div>
-        {/* Optional: Button to view more details */}
-        {/* <Button variant="outline-primary" size="sm" className="mt-auto fw-bold" onClick={handleViewDetails}>
-          View Details
-        </Button> */}
-      </Card.Body>
-    </Card>
+    // The div wrapper is necessary for react-slick to manage slide width
+    <div className="p-2">
+      <Card 
+        className="rounded-4 overflow-hidden shadow h-100 border-0" 
+        style={{ cursor: 'pointer', transition: 'transform 0.3s', transform: 'scale(1)' }}
+        onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.03)'}
+        onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+      >
+        {/* Use Ratio to enforce a 1:1 square aspect ratio for the card content */}
+        <Ratio aspectRatio="1x1">
+          {/* Card Body to hold the image and text */}
+          <div className="position-relative">
+            {/* Image */}
+            <Card.Img
+              src={image}
+              alt={name}
+              className="w-100 h-100 object-cover"
+              onError={(e) => {
+                e.target.src = "https://via.placeholder.com/400x400?text=No+Image";
+              }}
+            />
+
+            {/* Overlay for gradient effect and text - using standard Bootstrap positioning */}
+            <div 
+              className="position-absolute bottom-0 w-100 p-3 text-center text-white" 
+              style={{
+                // Custom gradient style to replace Tailwind's bg-gradient-to-t
+                background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, transparent 100%)',
+              }}
+            >
+              <Card.Title className="mb-0 fs-5 fw-bold text-shadow-lg">
+                {name}
+              </Card.Title>
+            </div>
+          </div>
+        </Ratio>
+      </Card>
+    </div>
   );
 };
 
