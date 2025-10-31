@@ -32,6 +32,7 @@ def generate_itinerary(user_preferences: dict, top_n=5):
             "entry_fee",
             "rating",
             "distance_from_center_km",
+            
             "travel_time_min",
             "guide_rating",
             "vendor_rating",
