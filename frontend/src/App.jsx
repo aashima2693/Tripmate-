@@ -72,8 +72,7 @@ const App = () => {
                     {/* Companion Finder & Chat */}
                     <Route path="/companions" element={<CompanionFinder />} />
                     {/* Note: /companions/profile/:id is required for a specific profile */}
-                    <Route path="/companions/profile/:id" element={<CompanionProfile />} />
-                    {/* Note: /chat/:id is required for a specific chat room */}
+                    <Route path="/companions/profile/:id" element={<CompanionProfile />} />                    {/* Note: /chat/:id is required for a specific chat room */}
                     <Route path="/chat/:id" element={<ChatScreen />} /> 
                     
                     {/* Admin/New Companion Form */}

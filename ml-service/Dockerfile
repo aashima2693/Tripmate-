@@ -22,4 +22,4 @@ EXPOSE ${APP_PORT}
 
 # Command to run the application using Uvicorn
 # Uses the full module path: src.main file and 'app' object inside it
-CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8001"]
+CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8001"]

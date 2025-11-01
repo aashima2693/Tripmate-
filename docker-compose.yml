@@ -1,42 +1,23 @@
-version: '3.8'
-
+version: '3.9'
 services:
-  # 1. PYTHON ML SERVICE (FastAPI)
-  ml-service:
-    build:
-      context: ./ml-service/  # Looks in your ml-service folder for its Dockerfile
-    container_name: tripmate-ml-service
-    restart: always
-    # Expose the internal port 8001. Node.js will call this internally.
-    expose:
-      - "8001" 
-    environment:
-      # Sets up standard environment variables for Python in a container
-      - PYTHONUNBUFFERED=1
-    networks:
-      - tripmate_network
-
-  # 2. NODE.JS BACKEND (Express)
   backend:
-    build:
-      context: ./backend/  # Looks in your backend folder for its Dockerfile
-    container_name: tripmate-backend
-    restart: always
-    # Expose the public port 8000 to your local machine (http://localhost:8000)
+    build: ./backend
+    container_name: backend_container
     ports:
-      - "8000:8000" 
+      - "8000:8000"
     depends_on:
-      - ml-service # Ensures the ML service is ready before the backend starts
-    environment:
-      # 🛑 CRITICAL CONNECTION LINK: 
-      # Node.js will use the Docker service name ('ml-service') as the host.
-      - ML_SERVICE_URL=http://ml-service:8001
-      - PORT=8000
-      # Include all other Node.js environment variables here (CORS_ORIGIN, DB_URL, etc.)
+      - mlservice
     networks:
-      - tripmate_network
+      - tripmate-net
 
-# Define the shared network for inter-container communication
+  mlservice:
+    build: ./ml-service
+    container_name: mlservice_container
+    ports:
+      - "5000:5000"
+    networks:
+      - tripmate-net
+
 networks:
-  tripmate_network:
+  tripmate-net:
     driver: bridge

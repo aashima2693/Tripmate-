@@ -1,14 +1,13 @@
-// TRIPMATE-/backend/api/routes/companion.routes.js
 import express from 'express';
 import { getCompanions, addCompanion } from '../controllers/companion.controller.js';
-import { protect } from '../middlewares/auth.middleware.js'; 
+import { protect } from '../middlewares/auth.middleware.js'; // Assuming 'protect' is the named export
 
 const router = express.Router();
 
-// Maps to: GET /api/v1/companions
+// GET /api/v1/companions (Fetch with filters)
 router.get('/', getCompanions);
 
-// Maps to: POST /api/v1/companions (Protected)
-router.post('/', addCompanion); 
+// POST /api/v1/companions (Protected)
+router.post('/', protect, addCompanion); 
 
 export default router;

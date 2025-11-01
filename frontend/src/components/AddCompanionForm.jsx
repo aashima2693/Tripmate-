@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Card, Form, Button, Row, Col, Alert, Spinner } from 'react-bootstrap';
-// 🛑 NOTE: Ensure these imports point to the correct files in your project:
-import { createCompanionProfile } from '../services/api/companionApi';
+import { createCompanionProfile } from "../services/api/companionApi.js";
 import { interestsList, destinationList, locationList } from '../data/Companions'; 
 
 const AddCompanionForm = () => {
