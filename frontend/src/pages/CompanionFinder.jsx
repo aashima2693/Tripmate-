@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react'; 
 import { Container, Row, Col, Dropdown, DropdownButton, Card, Form, InputGroup } from 'react-bootstrap';
 import CompanionCard from '../components/CompanionCard';
-import { getFilteredCompanions } from '../firebase/CompanionService';
+import { getFilteredCompanions } from '../services/CompanionService'; // 🛑 NEW IMPORT
 import { 
     // ... all data imports 
     getAgeRange, 

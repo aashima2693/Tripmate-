@@ -15,8 +15,9 @@ import ItineraryDisplay from "./pages/ItineraryDisplay.jsx";
 import CompanionFinder from "./pages/CompanionFinder.jsx";
 import CompanionProfile from "./pages/CompanionProfile.jsx";
 import ChatScreen from './pages/ChatScreen.jsx';
+import AddCompanionForm from "./components/AddCompanionForm.jsx";  
 
-const App = () => {
+const App = () => { 
     return (
         // 1. Set up flex container for sticky footer behavior
         <div className="d-flex flex-column min-vh-100">
@@ -49,6 +50,9 @@ const App = () => {
                         <Route path="/companions" element={<CompanionFinder />} />
                         <Route path="/companions/profile/:id" element={<CompanionProfile />} />
                         <Route path="/chat/:id" element={<ChatScreen />} />
+
+                        <Route path="/admin/add-companion" element={<AddCompanionForm />} />
+
                     </Routes>
                 </main>
                 
