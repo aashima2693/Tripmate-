@@ -8,51 +8,24 @@ const NODE_AI_ENDPOINT = "http://localhost:8000/api/v1/trip/ai-plan";
 // Using 'localhost' or an environment variable (best practice) is usually safer.
 
 
-export const getAIItinerary = async (tripData) => {
-    // 2. CRITICAL: Retrieve the token
-    const token = localStorage.getItem('userToken');
+export const getAIItinerary = async (payload, token) => {
+    // Assuming API endpoint is http://localhost:8000/api/v1/planner
+    const response = await fetch('http://localhost:8000/api/v1/planner', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            // 🛑 CRITICAL FIX: Include the Bearer Token
+            'Authorization': `Bearer ${token}`, 
+        },
+        body: JSON.stringify(payload),
+    });
 
-    if (!token) {
-        // Halt if no token is found
-        throw new Error("Authentication Failed: User token is missing. Please log in.");
+    if (!response.ok) {
+        // If the API failed (e.g., 401 Unauthorized), parse and throw the error message
+        const errorData = await response.json();
+        const errorMessage = errorData.message || "Unknown error";
+        throw new Error(`Authentication Failed: ${errorMessage}`);
     }
 
-    try {
-        const response = await axios.post(NODE_AI_ENDPOINT, tripData, {
-            headers: { 
-                "Content-Type": "application/json",
-                // 3. CRITICAL: Send the JWT token
-                "Authorization": `Bearer ${token}` 
-            },
-            // Set a long timeout for the ML model (Node.js waits 35s, then Python waits 30s)
-            timeout: 35000 
-        });
-        
-        // Response structure: 
-        // response.data (from axios) is your Node.js ApiResponse object
-        // response.data.data is the payload from the Node.js controller
-        // response.data.data.recommended_spots is the final itinerary list
-
-        const responseData = response.data.data;
-        console.log("AI itinerary response (from Node.js):", responseData);
-
-        // Extract the itinerary list and return it to PlannerForm.js
-        return responseData.recommended_spots;
-
-    } catch (error) {
-        // axios error handling is cleaner than fetch
-        const status = error.response?.status || 503;
-        const message = error.response?.data?.message || error.message;
-
-        console.error(`API Call Failed (${status}):`, message);
-        
-        if (status === 401) {
-             throw new Error("Session expired. Please log in again.");
-        }
-        if (status === 503) {
-             throw new Error("Trip Planner AI Service is temporarily unavailable.");
-        }
-        
-        throw new Error(`Itinerary generation failed: ${message}`);
-    }
+    return response.json();
 };

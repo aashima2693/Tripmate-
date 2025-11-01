@@ -136,3 +136,95 @@ p {
     cursor: pointer;
 }
 
+/* Add this to your GLOBAL CSS file (e.g., index.css or App.css) */
+
+/* 🛑 CRITICAL FIX: Define the custom keyframe animation globally */
+@keyframes spin-slow {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Apply the custom keyframe to a utility class */
+.animate-spin-slow {
+    animation: spin-slow 8s linear infinite;
+}
+
+/* ------------------------------------------- */
+/* 1. CSS Variable Definitions (Color Theme) */
+/* ------------------------------------------- */
+:root {
+    /* Primary Colors */
+    --color-primary-blue: #4E8EFF;
+    --color-secondary-green: #52D8AC;
+    
+    /* Background & Text */
+    --color-bg-light: #F4F7FB; 	 	 /* Slightly off-white background */
+    --color-text-dark: #2A3A4F; 	 	 /* Main headings/dark text */
+    --color-text-subtle: #6B7280; 	 /* Subtitles/helper text */
+    --color-white: #FFFFFF;
+    
+    /* Global Spacing/Shadows */
+    --spacing-md: 1.5rem;
+    --border-radius: 0.75rem;
+    --shadow-light: 0 8px 25px rgba(0, 0, 0, 0.15); /* Updated for better card lift */
+
+    /* Custom Gradient for Text/Accents (Based on Hero) */
+    --gradient-blue-green: linear-gradient(90deg, var(--color-primary-blue) 0%, var(--color-secondary-green) 100%);
+}
+
+/* ------------------------------------------- */
+/* 2. CSS Reset and Base Styles */
+/* ------------------------------------------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: var(--color-bg-light);
+    color: var(--color-text-dark);
+    line-height: 1.6;
+}
+
+/* --- Gradient & Theme Classes --- */
+.hero-gradient-bg {
+    background: linear-gradient(150deg, var(--color-primary-blue) 0%, var(--color-secondary-green) 100%);
+    color: var(--color-white);
+}
+
+.card-gradient-blue-green {
+    background: linear-gradient(90deg, var(--color-primary-blue) 0%, var(--color-secondary-green) 100%);
+}
+
+.navbar-brand-gradient {
+    font-weight: 700;
+    font-size: 1.5rem;
+    background: var(--gradient-blue-green);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+}
+
+
+/* ------------------------------------------- */
+/* 3. Companion Finder & Card Styles */
+/* ------------------------------------------- */
+
+.companion-card {
+    border-radius: 20px !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1) !important;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; 
+}
+
+.companion-card:hover {
+    transform: translateY(-8px) !important; 
+    box-shadow: 0 1rem 3rem rgba(0, 78, 255, 0.15) !important; 
+    cursor: pointer;
+}

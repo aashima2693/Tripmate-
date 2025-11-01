@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { StoreContext } from "../contexts/StoreContext";       // 🛑 Import StoreContext
 // Ensure this path to your API service is correct
 import { getAIItinerary } from "../services/api"; 
 import {
@@ -10,6 +11,7 @@ import {
     Row,
     Col,
     ListGroup,
+    Spinner // Assuming Spinner is used in the loading state
 } from "react-bootstrap";
 import { FaRupeeSign, FaCalendarAlt, FaMapMarkerAlt } from "react-icons/fa";
 import DatePicker from "react-datepicker";
@@ -17,53 +19,42 @@ import "react-datepicker/dist/react-datepicker.css";
 
 const PlannerForm = () => {
     const navigate = useNavigate();
+    // 🛑 Get the authentication token from the context
+    const { token } = useContext(StoreContext); 
 
     const [formData, setFormData] = useState({
         budget: "",
-        destination: "",            
-        interests: [], // still an array internally
-        duration_days: "",
+        destination: "", 
+        interests: [], 
+        duration_days: "", 
     });
 
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [suggestions, setSuggestions] = useState([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
+    const [loading, setLoading] = useState(false); // State for loading indicator
 
     const interestOptions = [
-        "Adventure",
-        "Nature",
-        "Culture",
-        "Beach",
-        "Wildlife",
-        "History",
-        "Shopping",
-        "Food",
-        "Nightlife",
-        "Relaxation",
+        "Adventure", "Nature", "Culture", "Beach", "Wildlife", 
+        "History", "Shopping", "Food", "Nightlife", "Relaxation",
     ];
-
-    // ✅ Fetch city suggestions from GeoDB API
+    
+    // --- API Logic for Destination Suggestions (Unchanged) ---
     const fetchSuggestions = async (query) => {
-        if (!query.trim()) {
-            setSuggestions([]);
-            return;
-        }
-
+        if (!query.trim()) { setSuggestions([]); return; }
+        // NOTE: Using a hardcoded key—must be secured in a production environment
         try {
             const response = await axios.get(
                 `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=5&namePrefix=${query}`,
                 {
                     headers: {
-                        "X-RapidAPI-Key": "69211009d5mshbe5c3162f6dc730p1d8f33jsn3ca0f1fece09", // replace key
+                        "X-RapidAPI-Key": "69211009d5mshbe5c3162f6dc730p1d8f33jsn3ca0f1fece09", 
                         "X-RapidAPI-Host": "wft-geo-db.p.rapidapi.com",
                     },
                 }
             );
-
-            const cities =
-                response?.data?.data?.map((city) => `${city.city}, ${city.country}`) ||
-                [];
+            const cities = response?.data?.data?.map((city) => `${city.city}, ${city.country}`) || [];
             setSuggestions(cities);
         } catch (error) {
             console.error("GeoDB API error:", error.response?.data || error.message);
@@ -71,6 +62,7 @@ const PlannerForm = () => {
         }
     };
 
+    // Debounce the search input
     useEffect(() => {
         const delay = setTimeout(() => {
             fetchSuggestions(formData.destination);
@@ -78,8 +70,13 @@ const PlannerForm = () => {
         return () => clearTimeout(delay);
     }, [formData.destination]);
 
+
+    // --- Form Handlers ---
     const handleChange = (field, value) => {
         setFormData((prev) => ({ ...prev, [field]: value }));
+        if (field === 'destination') {
+            setShowSuggestions(true);
+        }
     };
 
     const handleSelectSuggestion = (city) => {
@@ -99,34 +96,47 @@ const PlannerForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // 🛑 AUTHENTICATION CHECK
+        if (!token) {
+            alert("Please log in to use the AI Itinerary Planner.");
+            return;
+        }
+
         const duration =
             startDate && endDate
                 ? Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24))
-                : null;
+                : parseInt(formData.duration_days) || 1; 
 
-        // ✅ Convert interests to string before sending to FastAPI
+        // Basic validation check
+        if (!formData.budget || !formData.destination || duration < 1 || formData.interests.length === 0) {
+            alert("Please fill out Budget, Destination, Duration, and select at least one Interest.");
+            return;
+        }
+
+        setLoading(true);
+
         const requestBody = {
             budget: parseFloat(formData.budget),
-            duration_days: duration || parseInt(formData.duration_days) || 1,
-            interests: formData.interests.join(", "), // "Culture, History"
+            duration_days: duration,
+            interests: formData.interests.join(", "),
             destination: formData.destination,
         };
 
-        console.log("🧭 Sending to API:", requestBody);
-
         try {
-            // Passes requestBody as the payload
-            const itinerary = await getAIItinerary(requestBody); 
-            console.log("AI Response:", itinerary);
+            // 🛑 PASS TOKEN: The API service must accept and use this token
+            const itinerary = await getAIItinerary(requestBody, token); 
             
-            // Navigate and pass the itinerary data
             navigate("/itinerary", { state: { itinerary } }); 
         } catch (error) {
-            // Logs the error thrown by getAIItinerary if response.ok is false
             console.error("Error fetching itinerary:", error); 
+            // The API service should throw the message from the backend error response
+            alert(`Failed to generate itinerary. Error: ${error.message}`);
+        } finally {
+            setLoading(false);
         }
     };
 
+    // --- Component JSX ---
     return (
         <div
             style={{
@@ -141,7 +151,7 @@ const PlannerForm = () => {
             >
                 <h2 className="text-center fw-bold mb-4">Plan Your Adventure</h2>
 
-                <Form onSubmit={handleSubmit}>
+                <Form onSubmit={handleSubmit}> 
                     <Row className="g-4">
                         {/* 💰 Budget */}
                         <Col md={6}>
@@ -156,6 +166,7 @@ const PlannerForm = () => {
                                     value={formData.budget}
                                     onChange={(e) => handleChange("budget", e.target.value)}
                                     className="ps-4 py-3"
+                                    required
                                 />
                             </div>
                         </Col>
@@ -180,6 +191,7 @@ const PlannerForm = () => {
                                         placeholderText="From"
                                         dateFormat="dd/MM/yyyy"
                                         className="form-control me-2 py-3"
+                                        required={!formData.duration_days}
                                     />
                                     <DatePicker
                                         selected={endDate}
@@ -191,6 +203,7 @@ const PlannerForm = () => {
                                         placeholderText="To"
                                         dateFormat="dd/MM/yyyy"
                                         className="form-control py-3"
+                                        required={!!startDate}
                                     />
                                 </div>
                             </div>
@@ -207,11 +220,10 @@ const PlannerForm = () => {
                                 placeholder="Enter Destination"
                                 value={formData.destination}
                                 onChange={(e) => handleChange("destination", e.target.value)}
-                                onFocus={() =>
-                                    formData.destination && setShowSuggestions(true)
-                                }
+                                onFocus={() => formData.destination && setShowSuggestions(true)}
                                 onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
                                 className="ps-4 py-3"
+                                required
                             />
                             {showSuggestions && suggestions.length > 0 && (
                                 <ListGroup
@@ -261,13 +273,21 @@ const PlannerForm = () => {
                         <Button
                             type="submit"
                             className="fw-bold px-5 py-3 rounded-pill"
+                            disabled={loading}
                             style={{
                                 backgroundColor: "#00c6ff",
                                 border: "none",
                                 fontSize: "18px",
                             }}
                         >
-                            Craft My Itinerary with AI
+                            {loading ? (
+                                <>
+                                    <Spinner animation="border" size="sm" className="me-2" />
+                                    Crafting Itinerary...
+                                </>
+                            ) : (
+                                "Craft My Itinerary with AI"
+                            )}
                         </Button>
                     </div>
                 </Form>

@@ -1,7 +1,10 @@
 // src/pages/CompanionFinder.jsx
 
-import React, { useState, useEffect, useCallback } from 'react'; // 🛑 Changed useMemo to useEffect/useState
-import { Container, Row, Col, Dropdown, DropdownButton, Card, Form, InputGroup, Spinner } from 'react-bootstrap';
+import React, { useState, useMemo } from 'react';
+import { 
+    Container, Row, Col, Dropdown, DropdownButton, Card, Form, InputGroup, 
+    // Removed Spinner and API-related imports
+} from 'react-bootstrap'; 
 import CompanionCard from '../components/CompanionCard';
 import { 
     companionData, // 🛑 Local mock data
@@ -14,36 +17,51 @@ import {
 } from '../data/Companions'; // 🛑 Source of truth is now local data
 
 const CompanionFinder = () => {
-    const [filters, setFilters] = useState({ /* ... your filter state ... */ });
-    const [filteredCompanions, setFilteredCompanions] = useState([]); 
-    const [loading, setLoading] = useState(false); 
+    const [filters, setFilters] = useState({
+        destination: 'All Destinations',
+        location: 'All Locations',
+        age: 'All Ages',
+        interest: 'All Interests',
+        month: 'All Dates',
+        search: '',
+    });
+    // State for sorting is restored
+    const [sortBy, setSortBy] = useState('Default'); 
 
     const handleFilterChange = (filterName, value) => {
         setFilters(prev => ({ ...prev, [filterName]: value }));
     };
 
-    // 🛑 Replaced useMemo with a data fetching effect
-    useEffect(() => {
-        const fetchCompanionsData = async () => {
-            setLoading(true);
-            try {
-                // 🛑 CRITICAL: Call the new function name
-                const results = await fetchCompanions(filters); 
-                setFilteredCompanions(results);
-            } catch (error) {
-                // ...
-            } finally {
-                setLoading(false);
-            }
-        };
+    // 🛑 RESTORED: Filtering and Sorting Logic using useMemo
+    const filteredAndSortedCompanions = useMemo(() => {
+        const searchTerm = filters.search.toLowerCase();
+        
+        let filtered = companionData.filter(companion => {
+            // Guard against null/undefined data for safety, though local data should be clean
+            if (!companion) return false;
 
-        // Debounce search input for better performance
-        const delaySearch = setTimeout(fetchCompanions, 300); 
+            const destinationMatch = filters.destination === 'All Destinations' || companion.destination === filters.destination;
+            const locationMatch = filters.location === 'All Locations' || companion.startingLocation === filters.location; 
+            const ageMatch = filters.age === 'All Ages' || getAgeRange(companion.age) === filters.age;
+            const interestMatch = filters.interest === 'All Interests' || companion.interests.includes(filters.interest);
+            const monthMatch = filters.month === 'All Dates' || companion.availableMonths.includes(filters.month);
+            
+            const searchMatch = companion.name?.toLowerCase().includes(searchTerm) || companion.bio?.toLowerCase().includes(searchTerm);
 
-        return () => clearTimeout(delaySearch); // Cleanup debounce
-    }, [filters]); // Rerun effect whenever filters change
+            return destinationMatch && locationMatch && ageMatch && interestMatch && monthMatch && searchMatch;
+        });
 
-    // ... (rest of the component JSX, UNCHANGED) ...
+        // Apply Sorting Logic
+        if (sortBy === 'AgeAsc') {
+            filtered.sort((a, b) => a.age - b.age);
+        } else if (sortBy === 'AgeDesc') {
+            filtered.sort((a, b) => b.age - a.age);
+        } else if (sortBy === 'NameAsc') {
+            filtered.sort((a, b) => a.name.localeCompare(b.name));
+        }
+        
+        return filtered;
+    }, [filters, sortBy]); 
 
     return (
         <Container className="my-5">

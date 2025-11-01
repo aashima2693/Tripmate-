@@ -1,0 +1,47 @@
+/*
+ * File: ../styles/LoanApplicationScreen.css
+ * This CSS is needed to define the custom keyframe animation 
+ * referenced by the 'animate-spin-slow' class in the JSX component.
+ */
+
+/* * 🛑 CRITICAL FIX: Define the custom keyframe animation.
+ * This makes the dashed border circle rotate.
+ */
+@keyframes spin-slow {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* * Apply the custom keyframe to a utility class.
+ * The duration is set to 8 seconds to make it 'slow'.
+ */
+.animate-spin-slow {
+    animation: spin-slow 8s linear infinite;
+}
+
+
+/* * OPTIONAL: Define CSS variables to replace inline styles.
+ * If you switch the JSX from inline styles to classes, use these.
+ */
+:root {
+    --accent-color: #00bfa5; /* Teal */
+    --light-accent-color: #4dd0e1; /* Cyan */
+}
+
+/* Example of how you would style elements using classes instead of inline styles */
+
+/* .header-button {
+    background-color: var(--accent-color);
+}
+
+.icon-accent {
+    color: var(--accent-color);
+} */
+
+/* You may need additional global overrides or fixes here, 
+   but for the code provided, only the keyframe is strictly required. 
+*/
