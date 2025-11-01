@@ -1,23 +1,18 @@
-import { Router } from "express";
+import express from "express";
 import {
-  applyLoan,
-  getUserLoans,
-  getApprovedLoans,
-  changeLoanStatus,
+  createLoan,
+  getAllLoans,
+  getLoanById,
+  updateLoan,
+  deleteLoan,
 } from "../controllers/loan.controller.js";
 
-const router = Router();
+const router = express.Router();
 
-// Apply for a new loan
-router.post("/", applyLoan);
-
-// Get all loans for a user
-router.get("/:userId", getUserLoans);
-
-// Get only approved loans for a user
-router.get("/:userId/approved", getApprovedLoans);
-
-// Update loan status (admin)
-router.patch("/:id/status", changeLoanStatus);
+router.post("/", createLoan);
+router.get("/", getAllLoans);
+router.get("/:id", getLoanById);
+router.put("/:id", updateLoan);
+router.delete("/:id", deleteLoan);
 
 export default router;

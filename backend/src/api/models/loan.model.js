@@ -3,27 +3,29 @@ import mongoose from "mongoose";
 const loanSchema = new mongoose.Schema(
   {
     userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    loanType: {
       type: String,
       required: true,
+      enum: ["personal", "education", "home", "vehicle", "business"],
     },
     amount: {
       type: Number,
       required: true,
     },
-    tenure: {
+    duration: {
       type: Number, // in months
-      required: true,
-    },
-    purpose: {
-      type: String,
       required: true,
     },
     status: {
       type: String,
-      enum: ["pending", "approved", "rejected"],
       default: "pending",
+      enum: ["pending", "approved", "rejected"],
     },
-    appliedAt: {
+    createdAt: {
       type: Date,
       default: Date.now,
     },
@@ -32,5 +34,4 @@ const loanSchema = new mongoose.Schema(
 );
 
 const Loan = mongoose.model("Loan", loanSchema);
-
 export default Loan;
