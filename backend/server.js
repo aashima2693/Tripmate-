@@ -4,11 +4,11 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
-import connectDB from './src/config/db.config.js';
-import mainRouter from './src/api/routes/index.js';
+import { connectDB } from './src/config/db.config.js'; 
 import logger from './src/utils/logger.js';
+import 'dotenv/config';
 import { ApiError } from './src/utils/ApiError.js';
-
+import mainRouter from './src/api/routes/index.js'; // 🛑 ADD THIS LINE
 // Load environment variables
 dotenv.config();
 
@@ -29,6 +29,7 @@ app.use(express.json({ limit: '16kb' }));
 app.use(express.urlencoded({ extended: true, limit: '16kb' }));
 app.use(cookieParser());
 app.use(express.static('public'));
+app.use('/api/v1', mainRouter); 
 
 // Health check route
 app.get('/health', (req, res) => {
