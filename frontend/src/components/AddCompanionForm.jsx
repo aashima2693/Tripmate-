@@ -53,7 +53,7 @@ const AddCompanionForm = () => {
 
         try {
             // Call the Firebase service function to add the profile
-            const newId = await addCompanionProfile(formData); 
+            const newId = await createCompanionProfile(formData);
             
             setStatus('success');
             
