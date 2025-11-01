@@ -1,5 +1,5 @@
 // src/api/routes/index.js
-
+import express from 'express';
 import { Router } from 'express';
 import authRouter from './auth.routes.js';
 import userRouter from './user.routes.js';
@@ -7,7 +7,7 @@ import tripRouter from './trip.routes.js';
 import loanRouter from "./loan.routes.js";
 
 
-const router = Router();
+const router = express.Router();
 
 // Health check for API
 router.get('/health', (req, res) => {
@@ -24,4 +24,4 @@ router.use('/users', userRouter);    // Routes for /api/v1/users
 router.use('/trips', tripRouter);    // Routes for /api/v1/trips
 router.use("/loans", loanRouter);   // Routes for /api/v1/loans
 
-export default router;
+export default router; 

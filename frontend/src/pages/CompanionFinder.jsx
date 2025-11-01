@@ -1,9 +1,14 @@
 // src/pages/CompanionFinder.jsx
 
+<<<<<<< HEAD
 import React, { useState, useEffect, useCallback } from 'react'; 
 import { Container, Row, Col, Dropdown, DropdownButton, Card, Form, InputGroup } from 'react-bootstrap';
+=======
+import React, { useState, useEffect, useCallback } from 'react'; // 🛑 Changed useMemo to useEffect/useState
+import { Container, Row, Col, Dropdown, DropdownButton, Card, Form, InputGroup, Spinner } from 'react-bootstrap';
+>>>>>>> fb401693bd5687cd282999e1d90a02ebc7a12063
 import CompanionCard from '../components/CompanionCard';
-import { getFilteredCompanions } from '../services/CompanionService'; // 🛑 NEW IMPORT
+import { fetchCompanions } from '../services/api/companionApi';
 import { 
     // ... all data imports 
     getAgeRange, 
@@ -14,7 +19,6 @@ import {
     locationList
 } from '../data/Companions';
 
-
 const CompanionFinder = () => {
     const [filters, setFilters] = useState({ /* ... your filter state ... */ });
     const [filteredCompanions, setFilteredCompanions] = useState([]); 
@@ -24,15 +28,14 @@ const CompanionFinder = () => {
         setFilters(prev => ({ ...prev, [filterName]: value }));
     };
     useEffect(() => {
-        const fetchCompanions = async () => {
+        const fetchCompanionsData = async () => {
             setLoading(true);
             try {
-                // Call the service function to get results from Firestore
-                const results = await getFilteredCompanions(filters);
+                // 🛑 CRITICAL: Call the new function name
+                const results = await fetchCompanions(filters); 
                 setFilteredCompanions(results);
             } catch (error) {
-                console.error("Failed to fetch companions:", error);
-                setFilteredCompanions([]);
+                // ...
             } finally {
                 setLoading(false);
             }
