@@ -18,6 +18,7 @@ import CompanionProfile from "./pages/CompanionProfile.jsx";
 import ChatScreen from './pages/ChatScreen.jsx';
 import AddCompanionForm from "./components/AddCompanionForm.jsx"; 
 
+
 /**
  * Helper component to render Navbar and Footer conditionally.
  * This replaces the fragments in your original code.

@@ -1,49 +1,38 @@
+// src/components/DestinationCard.jsx (Assuming this is the file used in the slider)
+
 import React from 'react';
-import { Card, Ratio } from 'react-bootstrap';
-// **Note:** You must have the standard Bootstrap CSS included in your project.
+// Assuming your styling for the image overlay is here:
+// import '../styles/CategoryCard.css'; 
 
-const DestinationCard = ({ name, image }) => {
-  return (
-    // The div wrapper is necessary for react-slick to manage slide width
-    <div className="p-2">
-      <Card 
-        className="rounded-4 overflow-hidden shadow h-100 border-0" 
-        style={{ cursor: 'pointer', transition: 'transform 0.3s', transform: 'scale(1)' }}
-        onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.03)'}
-        onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
-      >
-        {/* Use Ratio to enforce a 1:1 square aspect ratio for the card content */}
-        <Ratio aspectRatio="1x1">
-          {/* Card Body to hold the image and text */}
-          <div className="position-relative">
-            {/* Image */}
-            
-            <Card.Img
-              src={image}
-              alt={name}
-              className="w-100 h-100 object-cover"
-              onError={(e) => {
-                e.target.src = "https://via.placeholder.com/400x400?text=No+Image";
-              }}
-            />
-
-            {/* Overlay for gradient effect and text - using standard Bootstrap positioning */}
-            <div 
-              className="position-absolute bottom-0 w-100 p-3 text-center text-white" 
-              style={{
-                // Custom gradient style to replace Tailwind's bg-gradient-to-t
-                background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, transparent 100%)',
-              }}
-            >
-              <Card.Title className="mb-0 fs-5 fw-bold text-shadow-lg">
-                {name}
-              </Card.Title>
+// Renaming props to match usage in ExploreDestinations: name, image
+const DestinationCard = ({ name, image }) => { 
+    
+    // Using a common Bootstrap Card structure (or simple div structure)
+    return (
+        // Wrapper div is necessary for react-slick slide sizing
+        <div className="p-2"> 
+            <div className="category-card-wrapper"> 
+                
+                {/* Image Container */}
+                <div className="card-image-container">
+                    <img 
+                        src={image} // 🛑 Uses the image path passed from ExploreDestinations
+                        alt={name} 
+                        className="card-image object-cover w-100 h-100" 
+                        onError={(e) => { 
+                            e.target.onerror = null; 
+                            // If image fails, show a placeholder URL (or a local placeholder image path)
+                            e.target.src="https://via.placeholder.com/400x300?text=No+Image"; 
+                        }}
+                    />
+                    {/* Text Overlay */}
+                    <div className="card-text-overlay">
+                        <h3 className="card-title text-white">{name}</h3>
+                    </div>
+                </div>
             </div>
-          </div>
-        </Ratio>
-      </Card>
-    </div>
-  );
+        </div>
+    );
 };
 
 export default DestinationCard;

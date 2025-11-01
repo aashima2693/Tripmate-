@@ -1,12 +1,7 @@
 // src/pages/CompanionFinder.jsx
 
-<<<<<<< HEAD
-import React, { useState, useEffect, useCallback } from 'react'; 
-import { Container, Row, Col, Dropdown, DropdownButton, Card, Form, InputGroup } from 'react-bootstrap';
-=======
 import React, { useState, useEffect, useCallback } from 'react'; // 🛑 Changed useMemo to useEffect/useState
 import { Container, Row, Col, Dropdown, DropdownButton, Card, Form, InputGroup, Spinner } from 'react-bootstrap';
->>>>>>> fb401693bd5687cd282999e1d90a02ebc7a12063
 import CompanionCard from '../components/CompanionCard';
 import { fetchCompanions } from '../services/api/companionApi';
 import { 
