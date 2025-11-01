@@ -12,7 +12,7 @@ import {
     loginValidation,
     changePasswordValidation
 } from '../middlewares/validator.middleware.js';
-import { verifyJWT } from '../middlewares/auth.middleware.js';
+import { protect } from '../middlewares/auth.middleware.js';
 
 const router = Router();
 
@@ -22,8 +22,8 @@ router.post('/login', loginValidation, login);
 router.post('/refresh-token', refreshAccessToken);
 
 // Protected routes
-router.post('/logout', verifyJWT, logout);
-router.get('/me', verifyJWT, getCurrentUser);
-router.post('/change-password', verifyJWT, changePasswordValidation, changePassword);
+router.post('/logout', protect, logout);
+router.get('/me', protect, getCurrentUser);
+router.post('/change-password', protect, changePasswordValidation, changePassword);
 
 export default router;

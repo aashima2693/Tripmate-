@@ -1,6 +1,6 @@
 // TRIPMATE-/backend/api/controllers/companion.controller.js
 import { Companion } from '../models/companion.model.js';
-import { asyncHandler } from '../../src/utils/asyncHandler.js'; // Assuming this exists
+import { asyncHandler } from '../../utils/asyncHandler.js'; // Assuming this exists
 
 // Helper to determine Age Range (keep client-side logic consistent)
 const getAgeRange = (age) => {
