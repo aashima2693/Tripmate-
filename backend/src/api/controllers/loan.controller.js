@@ -1,41 +1,62 @@
 import {
-  createLoan,
-  fetchLoansByUser,
-  fetchApprovedLoans,
-  updateLoanStatus,
+  createLoanService,
+  getAllLoansService,
+  getLoanByIdService,
+  updateLoanService,
+  deleteLoanService,
 } from "../services/loan.service.js";
 
-export const applyLoan = async (req, res) => {
+// Create Loan
+export const createLoan = async (req, res) => {
   try {
-    const loan = await createLoan(req.body);
-    res.status(201).json({ success: true, loan });
+    const loan = await createLoanService(req.body);
+    res.status(201).json({ success: true, data: loan });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message });
+  }
+};
+
+// Get All Loans
+export const getAllLoans = async (req, res) => {
+  try {
+    const loans = await getAllLoansService();
+    res.status(200).json({ success: true, data: loans });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
 };
 
-export const getUserLoans = async (req, res) => {
+// Get Loan By ID
+export const getLoanById = async (req, res) => {
   try {
-    const loans = await fetchLoansByUser(req.params.userId);
-    res.json({ success: true, loans });
+    const loan = await getLoanByIdService(req.params.id);
+    if (!loan)
+      return res.status(404).json({ success: false, message: "Loan not found" });
+    res.status(200).json({ success: true, data: loan });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
 };
 
-export const getApprovedLoans = async (req, res) => {
+// Update Loan
+export const updateLoan = async (req, res) => {
   try {
-    const loans = await fetchApprovedLoans(req.params.userId);
-    res.json({ success: true, loans });
+    const loan = await updateLoanService(req.params.id, req.body);
+    if (!loan)
+      return res.status(404).json({ success: false, message: "Loan not found" });
+    res.status(200).json({ success: true, data: loan });
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    res.status(400).json({ success: false, message: error.message });
   }
 };
 
-export const changeLoanStatus = async (req, res) => {
+// Delete Loan
+export const deleteLoan = async (req, res) => {
   try {
-    const updated = await updateLoanStatus(req.params.id, req.body.status);
-    res.json({ success: true, updated });
+    const loan = await deleteLoanService(req.params.id);
+    if (!loan)
+      return res.status(404).json({ success: false, message: "Loan not found" });
+    res.status(200).json({ success: true, message: "Loan deleted successfully" });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }

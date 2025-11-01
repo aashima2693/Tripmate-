@@ -1,16 +1,19 @@
 // frontend/src/services/api/companionApi.js
-const API_BASE_URL = 'http://localhost:5000/api/companions'; // 🛑 Set your backend URL
+const API_BASE_URL = 'http://localhost:8000/api/v1/companions';
 
 // 1. Fetch filtered companions
 export const fetchCompanions = async (filters) => {
-    // Convert filter object to query string (e.g., ?destination=Japan&interest=Food)
-    const queryString = new URLSearchParams(filters).toString();
+    // ... (query string setup) ...
     const response = await fetch(`${API_BASE_URL}?${queryString}`);
     
     if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        // Handle server errors (4xx or 5xx)
+        throw new Error(`HTTP error! Status: ${response.status}`);
     }
-    return response.json();
+    
+    // 🛑 CRITICAL FIX: Ensure the response is correctly parsed as JSON
+    // If this line failed or was missing, the component received raw response data.
+    return response.json(); // ✅ Returns the parsed JavaScript object (the array)
 };
 
 // 2. Add companion profile

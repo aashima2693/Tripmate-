@@ -10,13 +10,13 @@ import {
     deactivateAccount,
     deleteAccount
 } from '../controllers/user.controller.js';
-import { verifyJWT } from '../middlewares/auth.middleware.js';
+import { protect } from '../middlewares/auth.middleware.js';
 import { authorize } from '../middlewares/rbac.middleware.js';
 
 const router = Router();
 
 // All routes require authentication
-router.use(verifyJWT);
+router.use(protect);
 
 // Profile routes
 router.get('/profile', getUserProfile);

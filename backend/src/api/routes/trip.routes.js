@@ -9,14 +9,14 @@ import {
     updateTripStatus,
     planTripAI // <-- NEW IMPORT
 } from '../controllers/trip.controller.js';
-import { verifyJWT } from '../middlewares/auth.middleware.js';
+import { protect } from '../middlewares/auth.middleware.js';
 import { body } from 'express-validator';
 import { validate } from '../middlewares/validator.middleware.js';
 
 const router = Router();
 
 // All routes require authentication
-router.use(verifyJWT);
+router.use(protect);
 
 // --- NEW ML INTEGRATION ROUTE ---
 router.post(
