@@ -1,22 +1,37 @@
 import Loan from "../models/loan.model.js";
 
-// Create a new loan
-export const createLoan = async (loanData) => {
+/**
+ * Create a new loan
+ */
+export const createLoanService = async (loanData) => {
   const loan = new Loan(loanData);
   return await loan.save();
 };
 
-// Fetch all loans for a user
-export const fetchLoansByUser = async (userId) => {
-  return await Loan.find({ userId });
+/**
+ * Get all loans
+ */
+export const getAllLoansService = async () => {
+  return await Loan.find().populate("userId", "name email");
 };
 
-// Fetch approved loans for a user
-export const fetchApprovedLoans = async (userId) => {
-  return await Loan.find({ userId, status: "approved" });
+/**
+ * Get loan by ID
+ */
+export const getLoanByIdService = async (id) => {
+  return await Loan.findById(id);
 };
 
-// Update loan status (for admin)
-export const updateLoanStatus = async (loanId, status) => {
-  return await Loan.findByIdAndUpdate(loanId, { status }, { new: true });
+/**
+ * Update a loan
+ */
+export const updateLoanService = async (id, updatedData) => {
+  return await Loan.findByIdAndUpdate(id, updatedData, { new: true });
+};
+
+/**
+ * Delete a loan
+ */
+export const deleteLoanService = async (id) => {
+  return await Loan.findByIdAndDelete(id);
 };
